@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- start twist to ackermannDrive converter for robot steering plugin -->
+  <node pkg="eufsa_description" name="twist_to_ackermannDrive" type="twist_to_ackermannDrive.py" args="twistToAckermannDrive:=rbcar_robot_control/command" />
+  
+  <!-- start rqt robot steering module -->
+  <node pkg="rqt_robot_steering" name="rqt_robot_steering" type="rqt_robot_steering" />
+ 
+</launch>

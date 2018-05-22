@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<robot name="eufsa" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find eufsa_description)/urdf/bases/eufsa_base.gazebo.xacro"/>
+  <xacro:macro name="eufsa_base" params="name publish_bf hq">
+    <!-- Robot mechanical and motor parameters -->
+    <xacro:property name="PI" value="3.1415926535897931"/>
+    <xacro:property name="wheel_width" value="0.175"/>
+    <xacro:property name="clearance" value="0.25"/>
+    <!-- BASE FOOTPRINT -->
+    <xacro:if value="${publish_bf}">
+      <link name="base_footprint">
+        <visual>
+          <origin rpy="0 0 0" xyz="0 0 0"/>
+          <geometry>
+            <box size="0.001 0.001 0.001"/>
+          </geometry>
+        </visual>
+      </link>
+      <joint name="base_footprint_joint" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0 ${clearance}"/>
+        <!-- height is the clearance -->
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+      </joint>
+    </xacro:if>
+    <!-- BASE_LINK -->
+    <link name="base_link">
+      <inertial>
+        <mass value="125.0"/>
+        <origin xyz="0 0 0"/>
+        <inertia ixx="1.391" ixy="0.004" ixz="0.0" iyy="6.853" iyz="0.0" izz="6.125"/>
+      </inertial>
+      <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <xacro:if value="${hq}">
+          <geometry>
+            <mesh filename="package://eufsa_description/meshes/chassis.dae"/>
+          </geometry>
+        </xacro:if>
+        <xacro:unless value="${hq}">
+          <geometry>
+            <mesh filename="package://eufsa_description/meshes/chassis.dae"/>
+          </geometry>
+        </xacro:unless>
+      </visual>
+      <collision>
+        <origin rpy="0 0 0 " xyz="0 0 0"/>
+        <geometry>
+          <mesh filename="package://eufsa_description/meshes/chassis_collision.dae"/>
+        </geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+</robot>

@@ -1,0 +1,228 @@
+{
+  "keys": {},
+  "groups": {
+    "pluginmanager": {
+      "keys": {
+        "running-plugins": {
+          "type": "repr",
+          "repr": "{u'__DockWidgetContainer': [1], u'rqt_robot_steering/RobotSteering': [1], u'rqt_image_view/ImageView': [1]}"
+        }
+      },
+      "groups": {
+        "plugin____DockWidgetContainer__1": {
+          "keys": {},
+          "groups": {
+            "dock_widget": {
+              "keys": {
+                "dockable": {
+                  "type": "repr",
+                  "repr": "True"
+                },
+                "parent": {
+                  "type": "repr",
+                  "repr": "None"
+                },
+                "dock_widget_title": {
+                  "type": "repr",
+                  "repr": "u'Simple_visualisator'"
+                }
+              },
+              "groups": {
+                "mainwindow": {
+                  "keys": {
+                    "geometry": {
+                      "type": "repr(QByteArray.hex)",
+                      "repr(QByteArray.hex)": "QtCore.QByteArray('01d9d0cb0002000000000000000000150000073e0000040900000000000000150000073e0000040900000000000000000780')",
+                      "pretty-print": "         >       >       "
+                    },
+                    "state": {
+                      "type": "repr(QByteArray.hex)",
+                      "repr(QByteArray.hex)": "QtCore.QByteArray('000000ff00000000fd00000001000000020000073f000003f5fc0100000001fc000000000000073f0000019b00fffffffc0200000002fc00000000000002b70000010f00fffffffc0100000002fb00000026007200710074005f007200760069007a005f005f005200560069007a005f005f0031005f005f01000000000000058d0000000000000000fb0000006a007200710074005f0072006f0062006f0074005f007300740065006500720069006e0067005f005f0052006f0062006f0074005300740065006500720069006e0067005f005f0031005f005f0052006f0062006f0074005300740065006500720069006e00670055006901000000000000073f000000e700fffffffb0000005a007200710074005f0069006d006100670065005f0076006900650077005f005f0049006d0061006700650056006900650077005f005f0031005f005f0049006d006100670065005600690065007700570069006400670065007401000002bd00000138000000b200ffffff0000073f0000000000000004000000040000000800000008fc00000000')",
+                      "pretty-print": "                   ?                    &rqt_rviz__RViz__1__          jrqt_robot_steering__RobotSteering__1__RobotSteeringUi          Zrqt_image_view__ImageView__1__ImageViewWidget                       "
+                    }
+                  },
+                  "groups": {}
+                }
+              }
+            }
+          }
+        },
+        "plugin__rqt_rviz__RViz__1": {
+          "keys": {},
+          "groups": {
+            "dock_widget__": {
+              "keys": {
+                "dockable": {
+                  "type": "repr",
+                  "repr": "True"
+                },
+                "parent": {
+                  "type": "repr",
+                  "repr": "1"
+                },
+                "dock_widget_title": {
+                  "type": "repr",
+                  "repr": "u'RViz[*]'"
+                }
+              },
+              "groups": {}
+            }
+          }
+        },
+        "plugin__rqt_image_view__ImageView__1": {
+          "keys": {},
+          "groups": {
+            "dock_widget__ImageViewWidget": {
+              "keys": {
+                "dockable": {
+                  "type": "repr",
+                  "repr": "True"
+                },
+                "parent": {
+                  "type": "repr",
+                  "repr": "1"
+                },
+                "dock_widget_title": {
+                  "type": "repr",
+                  "repr": "u'Image View'"
+                }
+              },
+              "groups": {}
+            },
+            "plugin": {
+              "keys": {
+                "max_range": {
+                  "type": "repr",
+                  "repr": "10.0"
+                },
+                "mouse_pub_topic": {
+                  "type": "repr",
+                  "repr": "u'/overlay/compressed_mouse_left'"
+                },
+                "num_gridlines": {
+                  "type": "repr",
+                  "repr": "0"
+                },
+                "toolbar_hidden": {
+                  "type": "repr",
+                  "repr": "False"
+                },
+                "zoom1": {
+                  "type": "repr",
+                  "repr": "False"
+                },
+                "dynamic_range": {
+                  "type": "repr",
+                  "repr": "False"
+                },
+                "topic": {
+                  "type": "repr",
+                  "repr": "u'/overlay/compressed'"
+                },
+                "publish_click_location": {
+                  "type": "repr",
+                  "repr": "False"
+                }
+              },
+              "groups": {}
+            }
+          }
+        },
+        "plugin__rqt_robot_steering__RobotSteering__1": {
+          "keys": {},
+          "groups": {
+            "dock_widget__RobotSteeringUi": {
+              "keys": {
+                "dockable": {
+                  "type": "repr",
+                  "repr": "True"
+                },
+                "parent": {
+                  "type": "repr",
+                  "repr": "1"
+                },
+                "dock_widget_title": {
+                  "type": "repr",
+                  "repr": "u'Robot Steering'"
+                }
+              },
+              "groups": {}
+            },
+            "plugin": {
+              "keys": {
+                "topic": {
+                  "type": "repr",
+                  "repr": "u'/cmd_vel'"
+                },
+                "vx_min": {
+                  "type": "repr",
+                  "repr": "-1.0"
+                },
+                "vw_min": {
+                  "type": "repr",
+                  "repr": "-3.0"
+                },
+                "vw_max": {
+                  "type": "repr",
+                  "repr": "3.0"
+                },
+                "vx_max": {
+                  "type": "repr",
+                  "repr": "1.0"
+                }
+              },
+              "groups": {}
+            }
+          }
+        },
+        "plugin__rqt_bag__Bag__1": {
+          "keys": {},
+          "groups": {
+            "dock_widget__BagWidget": {
+              "keys": {
+                "dockable": {
+                  "type": "repr",
+                  "repr": "u'true'"
+                },
+                "parent": {
+                  "type": "repr",
+                  "repr": "None"
+                },
+                "dock_widget_title": {
+                  "type": "repr",
+                  "repr": "u'Bag'"
+                }
+              },
+              "groups": {}
+            }
+          }
+        }
+      }
+    },
+    "mainwindow": {
+      "keys": {
+        "geometry": {
+          "type": "repr(QByteArray.hex)",
+          "repr(QByteArray.hex)": "QtCore.QByteArray('01d9d0cb0002000000000041000000180000077f0000043700000041000000180000077f0000043700000000000000000780')",
+          "pretty-print": "     A     7 A     7     "
+        },
+        "state": {
+          "type": "repr(QByteArray.hex)",
+          "repr(QByteArray.hex)": "QtCore.QByteArray('000000ff00000000fd00000001000000030000073f0000040afc0100000004fc000000000000073f0000019b00fffffffc0200000005fb00000026007200710074005f007200760069007a005f005f005200560069007a005f005f0031005f005f03000001be000000fd000004bf0000036bfb0000005a007200710074005f0069006d006100670065005f0076006900650077005f005f0049006d0061006700650056006900650077005f005f0031005f005f0049006d00610067006500560069006500770057006900640067006500740300000352000000220000019d000003d2fb0000006a007200710074005f0072006f0062006f0074005f007300740065006500720069006e0067005f005f0052006f0062006f0074005300740065006500720069006e0067005f005f0031005f005f0052006f0062006f0074005300740065006500720069006e00670055006903000004350000013a0000031e00000111fb00000030005f005f0044006f0063006b0057006900640067006500740043006f006e007400610069006e00650072005f005f003101000000000000040a000001dc00fffffffc00000185000002310000000000fffffffa000000000200000001fb00000034007200710074005f006200610067005f005f004200610067005f005f0031005f005f00420061006700570069006400670065007401000000d3000002e30000000000000000fb0000004c007200710074005f006200610067005f005f004200610067005f005f0031005f005f002f00760065006c006f00640079006e0065005f0070006f0069006e00740073005f005f005200610077010000023c0000011a0000000000000000fb00000036007200710074005f006200610067005f005f004200610067005f005f0031005f005f002f0069006d0075005f005f0050006c006f0074010000024e000001a60000000000000000fb00000036007200710074005f006200610067005f005f004200610067005f005f0031005f005f002f006700700073005f005f0050006c006f007401000002c8000001fe00000000000000000000073f0000000000000004000000040000000800000008fc00000001000000030000000100000036004d0069006e0069006d0069007a006500640044006f0063006b00570069006400670065007400730054006f006f006c0062006100720000000000ffffffff0000000000000000')",
+          "pretty-print": "                   ?                                    k                                                 R \"                                                             5 :                                                      4rqt_bag__Bag__1__BagWidget          Lrqt_bag__Bag__1__/velodyne_points__Raw          6rqt_bag__Bag__1__/imu__Plot          6rqt_bag__Bag__1__/gps__Plot                            6MinimizedDockWidgetsToolbar        "
+        }
+      },
+      "groups": {
+        "toolbar_areas": {
+          "keys": {
+            "MinimizedDockWidgetsToolbar": {
+              "type": "repr",
+              "repr": "8"
+            }
+          },
+          "groups": {}
+        }
+      }
+    }
+  }
+}
