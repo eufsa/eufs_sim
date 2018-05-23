@@ -1,12 +1,14 @@
 # EUFS Autonomous Simulation
 
+ROS/Gazebo simulation packages for driverless FSAE vehicles.
+
 ![simulation](http://eufs.co/wp-content/uploads/2018/05/eufsa-sim.jpg)
 
 ### Contents
 1. [Install Prerequisites](#requirements)
 2. [Install dependencies](#dependencies)
 3. [Compiling and running](#compiling)
-4. [Useful Tools](#sensors)
+4. [Sensors](#sensors)
 
 ## Setup Instructions
 ### 1. Install Prerequisites <a name="requirements"></a>
@@ -24,6 +26,9 @@
 * ros-kinetic-joint-state-controller
 * ros-kinetic-gazebo-ros-control
 * ros-kinetic-robotnik-msgs
+* ros-kinetic-rbcar-robot-control
+
+__Note:__ You may need to build [rbcar_robot_control](https://github.com/RobotnikAutomation/rbcar_sim) from source.
 
 
 ### 2. Install project dependencies <a name="dependencies"></a>
