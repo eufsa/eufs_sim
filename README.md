@@ -36,7 +36,7 @@ Navigate to your catkin workspace.
 
 If you haven't used rosdep before do: `sudo rosdep init`
 
-To install necessary packages:  `rosdep install --from-path src`
+To install necessary packages:  `rosdep install --from-paths src`
 
 
 ### 3. Compiling and running <a name="compiling"></a>
