@@ -21,7 +21,7 @@ ROS/Gazebo simulation packages for driverless FSAE vehicles.
 * ros-kinetic-controller-manager
 * ros-kinetic-robotnik-msgs
 * ros-kinetic-velodyne-simulator
-* ros-kinetic-effort-controller
+* ros-kinetic-effort-controllers
 * ros-kinetic-velocity-controllers
 * ros-kinetic-joint-state-controller
 * ros-kinetic-gazebo-ros-control
@@ -45,7 +45,7 @@ Navigate to your workspace and run `catkin_make`
 This will be the command you usually use to compile.
 
 To enable ROS to find the EUFS packages you also need to run
-`source /devel/setup.bash`
+`source ./devel/setup.bash`
 
 _Note:_ source needs to be run on each new terminal you open. You can also include it in your `.bashrc` file.
 
