@@ -10,19 +10,18 @@
   <arg name="cmd_timeout" default="0.5"/>
   
   <!-- Vehicle pose -->
-  <arg name="x" default="0.0"/>
-  <arg name="y" default="-14.4"/>
+  <arg name="x" default="0"/>
+  <arg name="y" default="0"/>
   <arg name="z" default="0.1"/>
   <arg name="roll" default="0.0"/>
   <arg name="pitch" default="0.0"/>
-  <arg name="yaw" default="1.57079632679"/>
+  <arg name="yaw" default="0.0"/>
   
   <!-- eufsa_control launch file -->
   <include file="$(find eufsa_gazebo)/launch/eufsa_control.launch"/>
 
   <!-- Gazebo -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find eufsa_gazebo)/worlds/skidpad.world"/>
     <arg name="debug" value="$(arg debug)"/>
     <arg name="gui" value="$(arg gui)"/>
     <arg name="paused" value="false"/>
@@ -40,7 +39,5 @@
   
   <!-- start robot_control node -->
   <include file="$(find eufsa_robot_control)/launch/eufsa_robot_control.launch"/>
-
-  <include file="$(find ackermann_mux)/launch/ackermann_mux.launch" />
 
 </launch>

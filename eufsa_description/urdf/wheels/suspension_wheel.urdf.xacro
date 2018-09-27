@@ -49,6 +49,7 @@
        as a function of the max gradient (15%) with overall max payload (600Kg) * wheel_radius
        (calculating this way, it should be divided by 2 if 2 motors are used)
        axle_eff_limit = 204.95 / 2 N m = ~102.5 -->
+  <!-- xacro:property name="axle_eff_limit" value="102.5"/ -->
   <xacro:property name="axle_eff_limit" value="60"/>
   <!-- max_speed = 33 Km/h = 9.17 m/s
        axle_vel_limit = (2 * pi) * (max_speed / (pi * tire_dia)) =  39.02 rad/s -->
@@ -97,6 +98,7 @@
       <origin xyz="${fr_reflect * wheelbase / 2}
                    ${lr_reflect * ((hex_hub_dist / 2) - axle_length)}
                    ${-wheel_travel}"/>
+                  <!-- ${(wheel_travel / 2) - shock_z_offset}"/-->
       <axis xyz="0 0 -1"/>
       <limit lower="${-wheel_travel / 2}" upper="${wheel_travel / 2}"
              effort="${shock_eff_limit}" velocity="${shock_vel_limit}"/>
@@ -119,6 +121,18 @@
   <xacro:macro name="wheel" params="lr_prefix fr_prefix lr_reflect">
 
     <link name="${lr_prefix}_${fr_prefix}_axle_carrier">
+	  <!-- visual>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>
+	  </visual>
+	  <collision>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>
+	  </collision -->
       <xacro:null_inertial/>
     </link>
 
@@ -137,6 +151,7 @@
     <transmission name="${lr_prefix}_${fr_prefix}_axle_trans">
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${lr_prefix}_${fr_prefix}_axle">
+        <!-- hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface -->
         <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
       </joint>
       <actuator name="${lr_prefix}_${fr_prefix}_axle_act">
@@ -179,6 +194,9 @@
     </gazebo>
   </xacro:macro>
 
+
+  <!-- xacro:macro name="rubber_wheel" params="name parent *origin reflect hq" -->
+
   <!-- Front wheel -->
   <xacro:macro name="front_wheel"
                params="lr_prefix fr_prefix lr_reflect fr_reflect">
@@ -187,6 +205,18 @@
                  child="${lr_prefix}_steering_link"/>
 
     <link name="${lr_prefix}_steering_link">
+	  <!-- visual>
+		<origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>
+	  </visual>
+	  <collision>
+		<origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.1"/>
+        </geometry>
+	  </collision -->
       <xacro:null_inertial/>
     </link>
 

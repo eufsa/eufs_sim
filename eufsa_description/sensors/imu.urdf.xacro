@@ -34,7 +34,7 @@
 				<topicName>${prefix}</topicName>
 				<serviceName>${prefix}_service</serviceName>
 				<gaussianNoise>0.005</gaussianNoise>
-				<updateRate>20.0</updateRate>
+				<updateRate>1000.0</updateRate>
 			</plugin>
 		</gazebo>
 	</xacro:macro>

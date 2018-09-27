@@ -11,9 +11,6 @@
     <!-- Import Robotnik CAR base elements -->
     <xacro:include filename="$(find eufsa_description)/urdf/bases/eufsa_base.urdf.xacro" />
 
-    <!-- Import Robotnik CAR wheels -->
-    <xacro:include filename="$(find eufsa_description)/urdf/wheels/suspension_wheel.urdf.xacro" />
-
     <!-- Import all available sensors -->
     <xacro:include filename="$(find eufsa_description)/sensors/all_sensors.urdf.xacro" />
 
@@ -22,11 +19,6 @@
     <!-- ***************** -->
 
     <xacro:property name="PI" value="3.1415926535897931"/>
-
-    <!-- Wheel parameters -->
-    <xacro:property name="wheel_offset_x" value="1.0" />    <!-- x,y,z in translation from base_link to the center of the wheel -->
-    <xacro:property name="wheel_offset_y" value="0.75" />    
-    <xacro:property name="wheel_offset_z" value="0.0" />
 
     <!-- Flag to select the high or low quality model -->
     <xacro:property name="hq" value="true" />
@@ -41,23 +33,6 @@
     <!-- Summit XL base -->
     <xacro:eufsa_base name="eufsa" publish_bf="true" hq="${hq}" />
 
-    <!-- Gazebo ros control pluggins -->
-    <xacro:ros_control/>
-    
-    <!-- Gazebo skid steering pluggins -->
-    <!-- xacro:skid_steering broadcastOdomTF="1"/ -->
-
-    <!-- WHEELS -->
-
-    <!-- Wheels -->
-    <xacro:front_wheel lr_prefix="left" fr_prefix="front"
-        lr_reflect="1" fr_reflect="1"/>
-    <xacro:front_wheel lr_prefix="right" fr_prefix="front"
-        lr_reflect="-1" fr_reflect="1"/>
-    <xacro:rear_wheel lr_prefix="left" fr_prefix="rear"
-        lr_reflect="1" fr_reflect="-1"/>
-    <xacro:rear_wheel lr_prefix="right" fr_prefix="rear"
-        lr_reflect="-1" fr_reflect="-1"/>
 
 
     <!-- MAIN SENSORS -->
@@ -69,12 +44,12 @@
     STEREO CAM: -0.110 0.0 0.800 -->
 
     <xacro:sensor_imu parent="base_link" prefix="imu">
-        <origin xyz="0.0 0.0 0.170" rpy="0 0 0"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
     </xacro:sensor_imu>
 
 
     <xacro:sensor_gps  parent="base_link" prefix="gps">
-        <origin xyz="-0.110 0.0 0.9" rpy="0 0 0"/>
+        <origin xyz="0.0 0.0 0.9" rpy="0 0 0"/>
     </xacro:sensor_gps>
 
 
@@ -87,12 +62,13 @@
         <origin xyz="1.700 0.0 -0.150" rpy="0 -0.0174533 0"/>
     </xacro:VLP-16> -->
 
-    <xacro:VLP-16  parent="base_link" name="velodyne" topic="/velodyne_points_2" hz="10" samples="1200">
-        <origin xyz="1.700 0.0 -0.150" rpy="0 -${1.5*M_PI/180.0} 0"/>
-    </xacro:VLP-16>
+    <xacro:VLP-16R  parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="1200">
+        <origin xyz="1.541 0.0 0" rpy="0 -${1.5*M_PI/180.0} 0"/>
+    </xacro:VLP-16R>
+
 
     <xacro:zed_camera parent="base_link" prefix="zed">
-        <origin xyz="-0.110 0.0 0.8" rpy="0 0 0"/> 
+        <origin xyz="0.2 0.0 0.471" rpy="0 0 0"/> 
     </xacro:zed_camera>  
 
 

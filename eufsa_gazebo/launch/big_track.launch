@@ -37,10 +37,15 @@
   <node args="-urdf -model eufsa -param robot_description 
     -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)" 
     name="urdf_spawner" output="screen" pkg="gazebo_ros" respawn="false" type="spawn_model"/>
+  <!-- start robot_control node -->
+  <include file="$(find eufsa_robot_control)/launch/eufsa_robot_control.launch"/>
 
-  <rosparam command="load" file="$(find eufsa_gazebo)/config/rbcar_robot_control.yaml" />
-  <node name="rbcar_robot_control" pkg="rbcar_robot_control" type="rbcar_robot_control_node" output="screen">
-    <remap from="joint_states" to="eufsa/joint_states"/>
-  </node>
-
+  <!-- Python script to republish ground truth -->
+  <node 
+    name="ground_truth_republisher"
+    pkg="eufsa_gazebo"
+    type="ground_truth_republisher.py"
+    output="screen"
+  />
+  
 </launch>

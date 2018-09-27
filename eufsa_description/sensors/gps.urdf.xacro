@@ -40,7 +40,7 @@
                 <updateRate>10</updateRate>
                 <bodyName>${prefix}_base_link</bodyName>
                 <!-- must be the link of the gps device, not the base_link or base_footprint -->
-                <frameId>/${prefix}_base_link</frameId>
+                <frameId>${prefix}_base_link</frameId>
                 <topicName>gps</topicName>
                 <!-- Appleton Tower coordinates -->
                 <referenceLatitude>55.944400</referenceLatitude>

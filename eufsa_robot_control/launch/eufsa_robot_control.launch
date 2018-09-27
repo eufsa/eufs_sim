@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="publish_tf" default="false"/>
+
+  <node name="eufsa_robot_control" pkg="eufsa_robot_control" type="eufsa_robot_control_node" output="screen">
+	<remap from="joint_states" to="eufsa/joint_states"/>
+	<param name="model" value="eufsa"/>
+	<param name="publish_odom_tf" value="$(arg publish_tf)"/>
+  </node> 
+  
+</launch>
