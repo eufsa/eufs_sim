@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<robot name="zed_camera" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
+
+  <!-- Macro file for integrating ZED camera into a urdf
+Implimented via the multicamera gazebo plugin
+Has all of the appropriate parameters to run the
+ZED camera at WVGA 100 fps
+ -->
+
+  <xacro:macro name="zed_camera" params="prefix parent *origin">
+
+  <joint name="${prefix}_base_joint" type="fixed">
+    <axis xyz="1 0 0"/>
+    <!--origin xyz="0 0 0.2825"/-->
+    <xacro:insert_block name="origin"/>
+    <parent link="${parent}"/>
+    <child link="${prefix}_center"/>
+  </joint>
+
+
+  <link name="${prefix}_center">
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://eufs_description/meshes/zed.dae" />
+    </geometry>
+    <material name="light_grey">
+      <color rgba="0.8 0.8 0.8 0.8"/>
+    </material>
+  </visual>
+</link>
+
+
+<link name="${prefix}_left_camera"/>
+
+<link name="${prefix}_right_camera"/>
+
+<link name="${prefix}_left_camera_optical_frame"/>
+
+
+<joint name="${prefix}_left_camera_joint" type="fixed">
+  <parent link="${prefix}_center"/>
+  <child link="${prefix}_left_camera"/>
+  <origin xyz="0 0.06 0" rpy="0 0 0" />
+</joint>
+
+<joint name="${prefix}_right_camera_joint" type="fixed">
+  <parent link="${prefix}_center"/>
+  <child link="${prefix}_right_camera"/>
+  <origin xyz="0 -0.06 0" rpy="0 0 0" />
+</joint>
+
+<joint name="left_camera_optical_frame_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0.0 0.0 0.0" />
+    <parent link="${prefix}_left_camera" />
+    <child link="${prefix}_left_camera_optical_frame"/>
+  </joint>
+
+
+<gazebo reference="${prefix}_left_camera_optical_frame">
+  <sensor type="multicamera" name="stereo_camera">
+    <!-- see MultiSenseSLPlugin.h for available modes -->
+    <update_rate>100.0</update_rate>
+    <camera name="${prefix}_left">
+      <!-- <pose>0 0.06 0 0 0 0</pose>  doesn't seem to work here -->
+         <horizontal_fov>1.91986</horizontal_fov>
+         <image>
+          <width>672</width>
+          <height>376</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.5</near>
+          <far>20</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <camera name="${prefix}_right">
+        <pose>0 -0.12 0 0 0 0</pose>
+        <!-- Spec sheet says 80deg X 45deg @ 1024x544pix.  Based on feedback
+         from teams, we're instead doing 80deg X 80deg @ 800x800pix. -->
+         <horizontal_fov>1.91986</horizontal_fov>
+         <image>
+          <width>672</width>
+          <height>376</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.5</near>
+          <far>20</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <plugin name="stereo_camera_controller" filename="libgazebo_ros_multicamera.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>100.0</updateRate>
+        <cameraName>${prefix}</cameraName>
+        <imageTopicName>image_raw</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <frameName>/${prefix}_frame</frameName>
+        <!--<rightFrameName>right_camera_optical_frame</rightFrameName>-->
+        <hackBaseline>0.120</hackBaseline> <!-- the baseline shifts the left camera -->
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+      </plugin>
+    </sensor>
+  </gazebo>
+</xacro:macro>
+</robot>

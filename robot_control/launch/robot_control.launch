@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+
+  <node name="robot_control" pkg="robot_control" type="robot_control_node" output="screen">
+    <remap from="joint_states" to="eufs/joint_states"/>
+    <param name="model" value="eufs"/>
+    <param name="publish_odom_tf" value="true"/>
+    <param name="wheelbase" value="1.55"/>
+    <param name="wheel_diameter" value="0.505"/>
+    <param name="max_speed" value="10.0"/>
+    <param name="max_steering" value="0.523599"/> <!-- 30 degs -->
+  </node> 
+  
+</launch>

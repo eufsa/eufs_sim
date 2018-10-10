@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<package>
+  <name>eufs_description</name>
+  <version>0.1.0</version>
+  <description>The eufs_description package
+    Contrains all of the 3D models and meshes for 
+    simulation purposes.
+  </description>
+
+  <maintainer email="ignat.m.georgiev@gmail.com">Ignat Georgiev</maintainer>
+  <maintainer email="loizoustephanos@gmail.com">Stephanos Loizou</maintainer>
+  <maintainer email="olliejday@gmail.com">Oliver Day</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://eufs.co</url>
+  <url type="repository">https://github.com/eufs/eufs_sim</url>
+  <url type="bugtracker">https://github.com/eufs/eufs_sim/issues</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>urdf</build_depend>
+  <build_depend>xacro</build_depend>
+
+  <run_depend>gazebo_ros</run_depend>
+  <run_depend>urdf</run_depend>
+  <run_depend>xacro</run_depend>
+  <run_depend>hector_gazebo_plugins</run_depend>
+  <run_depend>controller-manager</run_depend>
+  <run_depend>velodyne-simulator</run_depend>
+  <run_depend>effort-controller</run_depend>
+  <run_depend>velocity-controllers</run_depend>
+  <run_depend>joint-state-controller</run_depend>
+  <run_depend>gazebo-ros-control</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>std_srvs</run_depend>
+  <run_depend>tf</run_depend>
+
+  <export>
+    <gazebo_ros                                                                 
+      gazebo_plugin_path="${prefix}/lib"
+      gazebo_model_path="${prefix}/.." /> 
+    </export>
+  </package>

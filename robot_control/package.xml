@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<package>
+  <name>robot_control</name>
+  <version>1.0.0</version>
+  <description>Package to control an ackermann racecar in simulation. Based on work of Robotnik.</description>
+
+  <maintainer email="ignat.m.georgiev@gmail.com">Ignat Georgiev</maintainer>
+  <maintainer email="loizoustephanos@gmail.com">Stephanos Loizou</maintainer>
+  <maintainer email="olliejday@gmail.com">Oliver Day</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://eufs.co</url>
+  <url type="repository">https://github.com/eufs/eufs_sim</url>
+  <url type="bugtracker">https://github.com/eufs/eufs_sim/issues</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>ackermann_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>nav_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>diagnostic_msgs</build_depend>
+  <build_depend>diagnostic_updater</build_depend>
+
+  <run_depend>ackermann_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>nav_msgs</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>tf</run_depend>
+
+
+  <export>
+  </export>
+
+</package>

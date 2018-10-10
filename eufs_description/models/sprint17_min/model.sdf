@@ -1,0 +1,2926 @@
+<?xml version='1.0'?>
+    <sdf version='1.6'>
+        <model name='sprin17_min'>
+    <link name='link'>
+      <pose frame=''>0 0 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>4.4758 -2.775 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>4.1697 3.2168 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>8.7983 -2.554 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>8.4920 3.4376 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>13.101 -2.334 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>12.834 3.6598 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>13.865 3.6701 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>13.740 -2.328 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>16.710 3.5821 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>16.310 -2.404 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>20.425 3.2260 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>19.574 -2.713 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>24.097 2.5118 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>23.920 -3.485 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>28.055 -2.806 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>26.197 2.8989 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>32.458 -0.873 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>30.017 4.6082 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>36.576 0.9811 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>34.601 6.6468 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>39.612 7.7153 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>39.238 1.7270 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>44.964 6.0666 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>42.635 0.5373 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>48.949 3.9506 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>46.119 -1.340 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>52.683 1.9534 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>49.854 -3.337 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>56.417 -0.043 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>53.588 -5.334 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>60.152 -2.040 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>57.322 -7.331 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>63.886 -4.037 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>61.057 -9.328 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>67.621 -6.034 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>64.791 -11.32 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>71.355 -8.031 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>68.526 -13.32 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>75.213 -10.09 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>72.137 -15.24 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>76.845 -11.35 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>72.950 -15.91 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>79.785 -13.95 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>75.555 -18.21 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>83.083 -17.59 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>78.214 -21.10 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>85.310 -21.75 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>79.669 -23.79 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>86.010 -25.51 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>80.076 -26.39 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>86.356 -28.37 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>80.458 -29.47 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>86.863 -30.47 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>81.357 -32.86 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>87.992 -32.26 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>83.370 -36.09 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>90.415 -34.61 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>86.228 -38.90 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>93.496 -37.61 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>89.042 -41.63 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>96.259 -41.21 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>90.956 -44.01 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>97.404 -45.87 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>91.434 -45.27 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>95.225 -50.37 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>90.835 -46.28 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>91.278 -53.01 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>88.785 -47.55 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>86.888 -54.33 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>85.790 -48.44 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>82.978 -54.61 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>82.761 -48.61 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>80.106 -54.61 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>79.612 -48.63 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>77.948 -54.97 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>76.310 -49.20 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>76.628 -55.51 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>73.313 -50.51 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>76.484 -55.43 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>70.866 -53.32 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>76.490 -56.39 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>70.564 -57.33 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>77.249 -58.40 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>71.760 -60.82 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>78.327 -60.34 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>73.135 -63.35 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>78.754 -61.00 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>73.915 -64.54 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>81.075 -64.06 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>76.290 -67.68 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>83.424 -67.17 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>78.639 -70.79 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>85.772 -70.27 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>80.987 -73.89 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>88.121 -73.38 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>83.336 -77.00 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>90.469 -76.48 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>85.684 -80.10 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>92.818 -79.59 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>88.033 -83.21 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>95.166 -82.69 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>90.381 -86.31 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>97.515 -85.79 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>92.730 -89.41 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>99.863 -88.90 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>95.078 -92.52 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>102.21 -92.00 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>97.427 -95.62 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>104.56 -95.11 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>99.775 -98.73 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>106.90 -98.21 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>102.12 -101.8 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>109.25 -101.3 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>104.47 -104.9 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>111.60 -104.4 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>106.82 -108.0 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>113.95 -107.5 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>109.16 -111.1 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>116.06 -110.3 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>111.75 -114.5 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>118.49 -112.3 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>115.75 -117.7 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>121.63 -113.1 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>120.05 -118.8 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>125.68 -114.4 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+    <link name='link'>
+      <pose frame=''>122.35 -119.4 1 0 -0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://eufs_description/meshes/cone.dae</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://materials/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

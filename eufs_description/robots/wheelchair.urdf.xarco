@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<robot name="eufs" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
+
+
+    <!-- ***************** -->
+    <!-- Imported elements -->
+    <!-- ***************** -->
+    
+    <!-- First we import all posible elements defined in the urdf.xacro files. All these elements are defined as macro:xacros -->
+
+    <!-- Import Robotnik CAR base elements -->
+    <xacro:include filename="$(find eufs_description)/urdf/bases/eufs_base.urdf.xacro" />
+
+    <!-- Import all available sensors -->
+    <xacro:include filename="$(find eufs_description)/sensors/all_sensors.urdf.xacro" />
+
+    <!-- ***************** -->
+    <!-- Global parameters -->
+    <!-- ***************** -->
+
+    <xacro:property name="PI" value="3.1415926535897931"/>
+
+    <!-- Flag to select the high or low quality model -->
+    <xacro:property name="eufs" value="true" />
+
+
+    <!-- *************** -->
+    <!-- Robots Elements -->
+    <!-- *************** -->
+
+    <!-- Here we create the robot elements using the xacro:macros imported at the beggining of this file -->
+
+    <!-- Summit XL base -->
+    <xacro:eufs_base name="eufs" publish_bf="true" eufs="${eufs}" />
+
+
+
+    <!-- MAIN SENSORS -->
+
+<!--     LOCATIONS: (XYZ)
+    IMU: 0.0 0.0 0.170
+    GPS: -0.110 0.0 0.9
+    LIDAR: 1.700 0.0 -0.150
+    STEREO CAM: -0.110 0.0 0.800 -->
+
+    <xacro:sensor_imu parent="base_link" prefix="imu">
+        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+    </xacro:sensor_imu>
+
+
+    <xacro:sensor_gps  parent="base_link" prefix="gps">
+        <origin xyz="0.0 0.0 0.9" rpy="0 0 0"/>
+    </xacro:sensor_gps>
+
+
+<!--     <xacro:sensor_hokuyo_utm30lx  parent="base_link" prefix="lidar" >
+        <origin xyz="1.700 0.0 -0.080" rpy="0 -0.0174533 0"/>
+    </xacro:sensor_hokuyo_utm30lx> -->
+
+
+    <!-- <xacro:VLP-16  parent="base_link" name="velodyne" topic="/velodyne_points" hz="10">
+        <origin xyz="1.700 0.0 -0.150" rpy="0 -0.0174533 0"/>
+    </xacro:VLP-16> -->
+
+    <xacro:VLP-16R  parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="1200">
+        <origin xyz="1.541 0.0 0" rpy="0 -${1.5*M_PI/180.0} 0"/>
+    </xacro:VLP-16R>
+
+
+    <xacro:zed_camera parent="base_link" prefix="zed">
+        <origin xyz="0.2 0.0 0.471" rpy="0 0 0"/> 
+    </xacro:zed_camera>  
+
+
+
+    <!-- EXTRA SENSORS FROM THE ROBOTNIK SENSORS LIBRARY -->
+
+<!--   
+    <xacro:sensor_hokuyo3d name="hokuyo3d" parent="base_link">
+        <origin xyz="0.9 0.0 0.450" rpy="0 0.35 0"/>
+    </xacro:sensor_hokuyo3d>
+    
+
+    <xacro:sensor_hokuyo_urg04lx name="hokuyo1" parent="base_link">
+        <origin xyz="-0.1 0.0 0.33" rpy="0 0 0"/>
+    </xacro:sensor_hokuyo_urg04lx>
+    
+
+    <xacro:sensor_axis name="camera" parent="base_link">
+        <origin xyz="0.19 0 0.17" rpy="0 ${15*PI/180} 0"/>
+    </xacro:sensor_axis> 
+     
+
+    <xacro:sensor_asus_xtion_pro name="xtion_pro" parent="base_link">
+        <origin xyz="0.3 0.0 0.3" rpy="0 0 0"/> 
+    </xacro:sensor_asus_xtion_pro>  
+
+
+    <xacro:sensor_kinect parent="base_link" prefix="kinect">
+        <origin xyz="0.0 0.0 0.45" rpy="0 0 0"/> 
+    </xacro:sensor_kinect>
+  
+
+    <xacro:BB2-08S2C-60  prefix="bee" frame="bee" name="bee"/>
+
+
+    <xacro:sensor_fotonic name="fotonic" parent="base_link">
+        <origin xyz="0.3 0.0 0.24" rpy="0 0 0"/> 
+    </xacro:sensor_fotonic>   -->
+
+
+
+    <!-- PLUGINS -->
+
+    <!-- ros control plugin --> 
+<!--   <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so"/>
+</gazebo> -->
+
+
+
+</robot>
+
+
+
+
+
