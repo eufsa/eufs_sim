@@ -12,7 +12,7 @@ from geometry_msgs.msg import Twist
 
 class Convert:
     def __init__(self):
-        self.publisher = rospy.Publisher('/cmd_vel_out', AckermannDriveStamped, queue_size=10)
+        self.publisher = rospy.Publisher('/robot_control/command', AckermannDriveStamped, queue_size=10)
         self.max_steering = 1
         self.min_steering = -1
         self.epsilon_steering = math.radians(0.001)
