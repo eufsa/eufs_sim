@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-  
+
   <!-- roslaunch arguments -->
   <env name="GAZEBO_MODEL_PATH" value="$(find eufs_description)"/>
   <env name="GAZEBO_RESOURCE_PATH" value="$(find eufs_description)"/>
@@ -12,11 +12,11 @@
   <!-- Vehicle pose -->
   <arg name="x" default="0"/>
   <arg name="y" default="0"/>
-  <arg name="z" default="0.1"/>
-  <arg name="roll" default="0.0"/>
-  <arg name="pitch" default="0.0"/>
-  <arg name="yaw" default="0.0"/>
-  
+  <arg name="z" default="0"/>
+  <arg name="roll" default="0"/>
+  <arg name="pitch" default="0"/>
+  <arg name="yaw" default="0"/>
+
   <!-- eufs_control launch file -->
   <include file="$(find eufs_gazebo)/launch/eufs_control.launch"/>
 
@@ -30,7 +30,7 @@
   </include>
 
   <!-- Load the URDF into the ROS Parameter Server -->
-  <param command="$(find xacro)/xacro '$(find eufs_description)/robots/eufs.urdf.xacro' --inorder" name="robot_description"/>
+  <param command="$(find xacro)/xacro '$(find eufs_description)/robots/ads-dv.urdf.xacro' --inorder" name="robot_description"/>
 
   <!-- Call a python script to the run a service call to gazebo_ros to spawn a URDF robot -->
   <node args="-urdf -model eufs -param robot_description 
@@ -38,6 +38,14 @@
     name="urdf_spawner" output="screen" pkg="gazebo_ros" respawn="false" type="spawn_model"/>
   
   <!-- start robot_control node -->
-  <include file="$(find eufs_robot_control)/launch/eufs_robot_control.launch"/>
+  <include file="$(find robot_control)/launch/robot_control.launch"/>
+
+  <!-- Python script to republish ground truth -->
+  <node 
+    name="ground_truth_republisher"
+    pkg="eufs_gazebo"
+    type="ground_truth_republisher.py"
+    output="screen"
+  />
 
 </launch>

@@ -25,10 +25,6 @@ ROS/Gazebo simulation packages for driverless FSAE vehicles.
 * ros-kinetic-velocity-controllers
 * ros-kinetic-joint-state-controller
 * ros-kinetic-gazebo-ros-control
-* ros-kinetic-robotnik-msgs
-* ros-kinetic-rbcar-robot-control
-
-__Note:__ You may need to build [rbcar_robot_control](https://github.com/RobotnikAutomation/rbcar_sim) from source.
 
 
 ### 2. Install project dependencies <a name="dependencies"></a>
@@ -51,7 +47,7 @@ _Note:_ source needs to be run on each new terminal you open. You can also inclu
 
 To run the different simulation configurations:
 
-* `roslaunch eufs_gazebo eufs.launch` - complete simulation with empty world
+* `roslaunch eufs_gazebo empty.launch` - complete simulation with empty world
 * `roslaunch eufs_gazebo small_track.launch` - complete simulation with a very small arteficial track. Closed loop.
 * `roslaunch eufs_gazebo big_track.launch` - complete simulation with an a big artifically made track. Closed loop.
 * `roslaunch eufs_gazebo sprint17.launch` - complete simulation of the FSUK 2017 track. Note: quite resource heavy.
@@ -60,7 +56,7 @@ To run the different simulation configurations:
 
 An easy way to control the car is via
 
-`roslaunch eufs_description rqt_robot_steering.launch `
+`roslaunch robot_control rqt_robot_steering.launch `
 
 ### 4. Additional sensors <a name="sensors"></a>
 Additional sensors for testing are avilable via the `ros-kinetic-robotnik-sensor` package. Some of them are already defined in `eufs_description/robots/eufs.urdf.xarco`. You can simply commment them in and attach them appropriately to the car.

@@ -12,7 +12,7 @@
   <!-- Vehicle pose -->
   <arg default="-43.0" name="x"/>
   <arg default="40" name="y"/>
-  <arg default="0.1" name="z"/>
+  <arg default="0.02" name="z"/>
   <arg default="0.0" name="roll"/>
   <arg default="0.0" name="pitch"/>
   <arg default="0.0" name="yaw"/>
@@ -31,7 +31,7 @@
   </include>
 
   <!-- Load the URDF into the ROS Parameter Server -->
-  <param command="$(find xacro)/xacro '$(find eufs_description)/robots/eufs.urdf.xacro' --inorder" name="robot_description"/>
+  <param command="$(find xacro)/xacro '$(find eufs_description)/robots/ads-dv.urdf.xacro' --inorder" name="robot_description"/>
 
   <!-- Call a python script to the run a service call to gazebo_ros to spawn a URDF robot -->
   <node args="-urdf -model eufs -param robot_description 
@@ -39,7 +39,7 @@
     name="urdf_spawner" output="screen" pkg="gazebo_ros" respawn="false" type="spawn_model"/>
   
   <!-- start robot_control node -->
-  <!-- <include file="$(find eufs_robot_control)/launch/eufs_robot_control.launch"/> -->
+  <include file="$(find robot_control)/launch/robot_control.launch"/>
 
   <!-- Python script to republish ground truth -->
   <node 

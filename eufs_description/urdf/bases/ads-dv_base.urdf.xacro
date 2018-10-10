@@ -10,7 +10,7 @@
   <xacro:property name="PI" value="3.1415926535897931"/>
   <xacro:property name="wheel_width" value="0.175" />
   <!-- <xacro:property name="clearance" value="${tire_dia/2.0}" /> -->
-  <xacro:property name="clearance" value="0.397" />
+  <xacro:property name="clearance" value="0.25" />
 
 
   <!-- BASE FOOTPRINT -->
@@ -50,22 +50,42 @@
        <origin xyz="0 0 0" rpy="0 0 0" />
        <xacro:if value="${hq}">
        <geometry>
-	     <mesh filename="package://eufs_description/meshes/chassis.dae"/>
+	     <mesh filename="package://eufs_description/meshes/ads-dv.dae"/>
        </geometry>
        </xacro:if>
        <xacro:unless value="${hq}">
        <geometry>
-	     <mesh filename="package://eufs_description/meshes/chassis.dae"/>
+	     <mesh filename="package://eufs_description/meshes/ads-dv.dae"/>
        </geometry>
        </xacro:unless>
     </visual>
     <collision>
        <origin xyz="0 0 0" rpy="0 0 0 " />
        <geometry>
-         <mesh filename="package://eufs_description/meshes/chassis_collision.dae"/>
+         <mesh filename="package://eufs_description/meshes/ads-dv.dae"/>
        </geometry>
     </collision>
   </link>
+  	
+  <link name="odom_ground_truth">
+    <collision>
+      <geometry>
+        <box size="0.1 0.1 0.1"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+  <joint name="odom_ground_truth_joint" type="fixed">
+    <axis xyz="0 0 0" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="odom_ground_truth"/>
+  </joint>
 
 
   </xacro:macro>

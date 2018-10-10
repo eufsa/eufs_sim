@@ -9,10 +9,10 @@
     <!-- First we import all posible elements defined in the urdf.xacro files. All these elements are defined as macro:xacros -->
 
     <!-- Import Robotnik CAR base elements -->
-    <xacro:include filename="$(find eufs_description)/urdf/bases/imechie_base.urdf.xacro" />
+    <xacro:include filename="$(find eufs_description)/urdf/bases/ads-dv_base.urdf.xacro" />
 
     <!-- Import Robotnik CAR wheels -->
-    <!-- <xacro:include filename="$(find eufs_description)/urdf/wheels/suspension_wheel.urdf.xacro" /> -->
+    <xacro:include filename="$(find eufs_description)/urdf/wheels/suspension_wheel.urdf.xacro" />
 
     <!-- Import all available sensors -->
     <xacro:include filename="$(find eufs_description)/sensors/all_sensors.urdf.xacro" />
@@ -50,14 +50,14 @@
     <!-- WHEELS -->
 
     <!-- Wheels -->
-    <!-- <xacro:front_wheel lr_prefix="left" fr_prefix="front"
+    <xacro:front_wheel lr_prefix="left" fr_prefix="front"
         lr_reflect="1" fr_reflect="1"/>
     <xacro:front_wheel lr_prefix="right" fr_prefix="front"
         lr_reflect="-1" fr_reflect="1"/>
     <xacro:rear_wheel lr_prefix="left" fr_prefix="rear"
         lr_reflect="1" fr_reflect="-1"/>
     <xacro:rear_wheel lr_prefix="right" fr_prefix="rear"
-        lr_reflect="-1" fr_reflect="-1"/> -->
+        lr_reflect="-1" fr_reflect="-1"/>
 
 
     <!-- MAIN SENSORS -->
@@ -69,12 +69,12 @@
     STEREO CAM: -0.110 0.0 0.800 -->
 
     <xacro:sensor_imu parent="base_link" prefix="imu">
-        <origin xyz="-0.055 -0.085 0.170" rpy="0 0 0"/>
+        <origin xyz="-0.0 0.0 0.0" rpy="0 0 0"/>
     </xacro:sensor_imu>
 
 
     <xacro:sensor_gps  parent="base_link" prefix="gps">
-        <origin xyz="-0.110 0.0 0.9" rpy="0 0 0"/>
+        <origin xyz="0.0 0.0 0.4" rpy="0 0 0"/>
     </xacro:sensor_gps>
 
 
@@ -88,11 +88,11 @@
     </xacro:VLP-16> -->
 
     <xacro:VLP-16R  parent="base_link" name="velodyne" topic="/velodyne_points_2" hz="8" samples="800">
-        <origin xyz="1.55 0.0 -0.242" rpy="0 ${1*M_PI/180.0} 0"/>
+        <origin xyz="1.58 0.0 -0.1" rpy="0 ${1*M_PI/180.0} 0"/>
     </xacro:VLP-16R>
 
     <xacro:zed_camera parent="base_link" prefix="zed">
-        <origin xyz="1.010 0.035 0.143" rpy="0 0 0"/> 
+        <origin xyz="0.1 0.0 0.48" rpy="0 0 0"/> 
     </xacro:zed_camera>  
 
 
