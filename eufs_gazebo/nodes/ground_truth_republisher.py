@@ -8,10 +8,8 @@ same frame as the state estimator.
 
 import numpy as np
 import math
-
 import rospy
 import tf
-
 from nav_msgs.msg import Odometry
 
 class GroundTruthRepublisher(object):

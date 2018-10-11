@@ -6,9 +6,8 @@ ROS/Gazebo simulation packages for driverless FSAE vehicles.
 
 ### Contents
 1. [Install Prerequisites](#requirements)
-2. [Install dependencies](#dependencies)
-3. [Compiling and running](#compiling)
-4. [Sensors](#sensors)
+2. [Compiling and running](#compiling)
+3. [Sensors](#sensors)
 
 ## Setup Instructions
 ### 1. Install Prerequisites <a name="requirements"></a>
@@ -26,39 +25,32 @@ ROS/Gazebo simulation packages for driverless FSAE vehicles.
 * ros-kinetic-joint-state-controller
 * ros-kinetic-gazebo-ros-control
 
-
-### 2. Install project dependencies <a name="dependencies"></a>
-Navigate to your catkin workspace.
-
-If you haven't used rosdep before do: `sudo rosdep init`
-
-To install necessary packages:  `rosdep install --from-paths src`
+Or if you are lazy like my here's a one-liner
+```sudo apt-get install ros-kinetic-ackermann-msgs ros-kinetic-twist-mux ros-kinetic-joy ros-kinetic-controller-manager ros-kinetic-robotnik-msgs ros-kinetic-velodyne-simulator ros-kinetic-effort-controllers ros-kinetic-velocity-controllers ros-kinetic-joint-state-controller ros-kinetic-gazebo-ros-control ros-kinetic-robotnik-msgs```
 
 
-### 3. Compiling and running <a name="compiling"></a>
-Navigate to your workspace and run `catkin_make`
+### 2. Compiling and running <a name="compiling"></a>
 
-This will be the command you usually use to compile.
+Create a workspace for the simulation if you don't have one:
+```mkdir -p ~/ros/eufs_ws/src```
+Copy the contents of this repository to the `src` folder you just created.
+
+Navigate to your workspace and build the simulation:
+```cd ~/ros/eufs_ws
+catkin_make```
+_Note:_ You can use `catkin build` instead of `catkin_make` if you know what you are doing.
 
 To enable ROS to find the EUFS packages you also need to run
-`source ./devel/setup.bash`
-
+```source /devel/setup.bash```
 _Note:_ source needs to be run on each new terminal you open. You can also include it in your `.bashrc` file.
 
-To run the different simulation configurations:
-
-* `roslaunch eufs_gazebo empty.launch` - complete simulation with empty world
-* `roslaunch eufs_gazebo small_track.launch` - complete simulation with a very small arteficial track. Closed loop.
-* `roslaunch eufs_gazebo big_track.launch` - complete simulation with an a big artifically made track. Closed loop.
-* `roslaunch eufs_gazebo sprint17.launch` - complete simulation of the FSUK 2017 track. Note: quite resource heavy.
-* `roslaunch eufs_gazebo acceleration.launch` - complete simulation of an acceleration event as detailed by FSG.
-* `roslaunch eufs_gazebo skidpad.launch` - complete simulation of an skidpad event as detailed by FSG.
+Now you can finally run our kickass simulation!!
+```roslaunch eufs_gazebo small_track.launch```
 
 An easy way to control the car is via
+```roslaunch robot_control rqt_robot_control.launch```
 
-`roslaunch robot_control rqt_robot_steering.launch `
-
-### 4. Additional sensors <a name="sensors"></a>
+### 3. Additional sensors <a name="sensors"></a>
 Additional sensors for testing are avilable via the `ros-kinetic-robotnik-sensor` package. Some of them are already defined in `eufs_description/robots/eufs.urdf.xarco`. You can simply commment them in and attach them appropriately to the car.
 
 

@@ -4,9 +4,6 @@
   <!-- whether to use overlay or not -->
   <arg name="use_overlay" default="false" />
 
-  <!-- start twist to ackermannDrive converter for robot steering plugin -->
-  <node pkg="eufs_description" name="twist_to_ackermannDrive" type="twist_to_ackermannDrive.py" args="twistToAckermannDrive:=eufs_robot_control/command" />
-
   <!-- launch rviz config file -->
   <node pkg="rviz" type="rviz" name="rviz" args="-d $(find eufs_description)/config/rviz/visualisator.rviz" />
 
