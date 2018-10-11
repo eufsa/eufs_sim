@@ -26,7 +26,9 @@ ROS/Gazebo simulation packages for driverless FSAE vehicles.
 * ros-kinetic-gazebo-ros-control
 
 Or if you are lazy like my here's a one-liner
-```sudo apt-get install ros-kinetic-ackermann-msgs ros-kinetic-twist-mux ros-kinetic-joy ros-kinetic-controller-manager ros-kinetic-robotnik-msgs ros-kinetic-velodyne-simulator ros-kinetic-effort-controllers ros-kinetic-velocity-controllers ros-kinetic-joint-state-controller ros-kinetic-gazebo-ros-control ros-kinetic-robotnik-msgs```
+```
+sudo apt-get install ros-kinetic-ackermann-msgs ros-kinetic-twist-mux ros-kinetic-joy ros-kinetic-controller-manager ros-kinetic-robotnik-msgs ros-kinetic-velodyne-simulator ros-kinetic-effort-controllers ros-kinetic-velocity-controllers ros-kinetic-joint-state-controller ros-kinetic-gazebo-ros-control ros-kinetic-robotnik-msgs
+```
 
 
 ### 2. Compiling and running <a name="compiling"></a>
@@ -36,8 +38,10 @@ Create a workspace for the simulation if you don't have one:
 Copy the contents of this repository to the `src` folder you just created.
 
 Navigate to your workspace and build the simulation:
-```cd ~/ros/eufs_ws
-catkin_make```
+```
+cd ~/ros/eufs_ws
+catkin_make
+```
 _Note:_ You can use `catkin build` instead of `catkin_make` if you know what you are doing.
 
 To enable ROS to find the EUFS packages you also need to run
