@@ -48,8 +48,6 @@
     <!-- xacro:skid_steering broadcastOdomTF="1"/ -->
 
     <!-- WHEELS -->
-
-    <!-- Wheels -->
     <xacro:front_wheel lr_prefix="left" fr_prefix="front"
         lr_reflect="1" fr_reflect="1"/>
     <xacro:front_wheel lr_prefix="right" fr_prefix="front"
@@ -61,12 +59,6 @@
 
 
     <!-- MAIN SENSORS -->
-
-<!--     LOCATIONS: (XYZ)
-    IMU: 0.0 0.0 0.170
-    GPS: -0.110 0.0 0.9
-    LIDAR: 1.700 0.0 -0.150
-    STEREO CAM: -0.110 0.0 0.800 -->
 
     <xacro:sensor_imu parent="base_link" prefix="imu">
         <origin xyz="0.0 0.0 0.170" rpy="0 0 0"/>
@@ -87,12 +79,12 @@
         <origin xyz="1.700 0.0 -0.150" rpy="0 -0.0174533 0"/>
     </xacro:VLP-16> -->
 
-    <xacro:VLP-16  parent="base_link" name="velodyne" topic="/velodyne_points_2" hz="10" samples="1200">
+    <xacro:VLP-16  parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="1200">
         <origin xyz="1.700 0.0 -0.150" rpy="0 -${1.5*M_PI/180.0} 0"/>
     </xacro:VLP-16>
 
     <xacro:zed_camera parent="base_link" prefix="zed">
-        <origin xyz="-0.110 0.0 0.8" rpy="0 0 0"/> 
+        <origin xyz="-0.110 0.0 0.84" rpy="0 0 0"/> 
     </xacro:zed_camera>  
 
 

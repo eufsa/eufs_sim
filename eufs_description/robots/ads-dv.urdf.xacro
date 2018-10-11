@@ -87,12 +87,12 @@
         <origin xyz="1.700 0.0 -0.150" rpy="0 -0.0174533 0"/>
     </xacro:VLP-16> -->
 
-    <xacro:VLP-16R  parent="base_link" name="velodyne" topic="/velodyne_points_2" hz="8" samples="800">
+    <xacro:VLP-16R  parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="800">
         <origin xyz="1.58 0.0 -0.1" rpy="0 ${1*M_PI/180.0} 0"/>
     </xacro:VLP-16R>
 
     <xacro:zed_camera parent="base_link" prefix="zed">
-        <origin xyz="0.1 0.0 0.48" rpy="0 0 0"/> 
+        <origin xyz="0.1 0.0 0.52" rpy="0 0 0"/> 
     </xacro:zed_camera>  
 
 
