@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/eufs" args="--shutdown-time 1 --namespace=/eufs
+					  left_front_shock_controller
+					  left_steering_joint_controller
+					  left_front_axle_controller
+					  right_front_shock_controller
+					  right_steering_joint_controller
+					  right_front_axle_controller
+					  left_rear_shock_controller
+					  left_rear_axle_controller
+					  right_rear_shock_controller
+					  right_rear_axle_controller
+					  joint_read_state_controller
+                      "/>
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find eufs_gazebo)/config/eufs_control.yaml" command="load"/>
+
+  <!-- once the joint_state is published, run the robot_state_publisher, the namespace has to be adapted --> 
+  <!-- convert joint states to TF transforms for rviz, etc -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+    respawn="false" output="screen">
+    <remap from="/joint_states" to="/eufs/joint_states" />
+  </node>
+  
+  <!-- stereo_img_proc to process simulated stereo camera feed for depth and point cloud topics -->
+  <node pkg="stereo_image_proc" name="stereo_image_proc" type="stereo_image_proc" ns="zed" />
+  <!-- static tf node to transform the stero_image_proc into base_link frame -->
+  <node pkg="tf" name="point2_to_base_link_tf" type="static_transform_publisher" args="-0.12 0.06 0.9 -1.57079632679 0 -1.57079632679 base_link zed_frame 100.0" />
+  
+
+</launch>
+

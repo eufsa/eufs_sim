@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- whether to use overlay or not -->
+  <arg name="use_overlay" default="false" />
+
+  <!-- launch rviz config file -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find eufs_description)/config/rviz/visualisator.rviz" />
+
+  <!-- if using overlay, launch overlay python script and rqt perspective file reading overlay images -->
+  <group if="$(arg use_overlay)">
+  	  <node pkg="rqt_gui" name="debug_visuals" type="rqt_gui" args="--perspective-file $(find eufs_description)/config/rqt/visualisator_overlay.perspective"/>
+  	  <node pkg="eufs_description" name="camera_overlay" type="camera_overlay.py"/>
+  </group>
+  
+  <!-- else if not using overlay, launch rqt perspective file reading normal camera images -->
+  <group if="$(eval not arg('use_overlay'))">
+  	  <node pkg="rqt_gui" name="debug_visuals" type="rqt_gui" args="--perspective-file $(find eufs_description)/config/rqt/visualisator.perspective"/>
+  </group>
+
+</launch>

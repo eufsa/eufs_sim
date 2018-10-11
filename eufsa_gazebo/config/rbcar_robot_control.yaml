@@ -1,9 +1,0 @@
-rbcar_robot_control:
-  model: rbcar
-  publish_odom_tf: true
-  frw_vel_topic: eufsa/right_front_axle_controller/command
-  flw_vel_topic: eufsa/left_front_axle_controller/command
-  blw_vel_topic: eufsa/left_rear_axle_controller/command
-  brw_vel_topic: eufsa/right_rear_axle_controller/command
-  frw_pos_topic: eufsa/right_steering_joint_controller/command
-  flw_pos_topic: eufsa/left_steering_joint_controller/command
