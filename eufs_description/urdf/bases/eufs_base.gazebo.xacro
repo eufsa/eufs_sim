@@ -24,7 +24,7 @@
         <gaussianNoise>0.00</gaussianNoise>
         <frameName>world</frameName>
         <!-- origin is at spawn location -->
-        <xyzOffset>43.0 -40 0</xyzOffset>
+        <xyzOffset>0.0 0.0 0</xyzOffset>
         <rpyOffset>0 0 0</rpyOffset>
     </plugin>
   </gazebo>

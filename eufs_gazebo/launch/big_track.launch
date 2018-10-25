@@ -11,7 +11,7 @@
 
   <!-- Vehicle pose -->
   <arg default="-43.0" name="x"/>
-  <arg default="40" name="y"/>
+  <arg default="35.5" name="y"/>
   <arg default="0.02" name="z"/>
   <arg default="0.0" name="roll"/>
   <arg default="0.0" name="pitch"/>
@@ -48,5 +48,13 @@
     type="ground_truth_republisher.py"
     output="screen"
   />
+
+  <node
+    name="message_to_tf"
+    pkg="message_to_tf"
+    type="message_to_tf"
+    output="screen"
+    args="/ground_truth/state">
+  </node>
   
 </launch>

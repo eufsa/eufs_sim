@@ -29,24 +29,26 @@ class GroundTruthRepublisher(object):
 
     #print msg.pose.pose.position.x, msg.pose.pose.position.y
 
+    # Everything below is commented out because no rotation is needed for our sim
+
     #rotate position 90 deg around z-axis
-    pos = np.dot(rotationNeg90Deg,np.array([msg.pose.pose.position.x, msg.pose.pose.position.y]))
-    msg.pose.pose.position.x = pos[0]
-    msg.pose.pose.position.y = pos[1]
+    # pos = np.dot(rotationNeg90Deg,np.array([msg.pose.pose.position.x, msg.pose.pose.position.y]))
+    # msg.pose.pose.position.x = pos[0]
+    # msg.pose.pose.position.y = pos[1]
 
     #rotate orientation 90 deg around z-axis
-    q_rot = tf.transformations.quaternion_from_euler(0, 0, 1.57)  
-    q_new = tf.transformations.quaternion_multiply(q_rot,[msg.pose.pose.orientation.x, msg.pose.pose.orientation.y, msg.pose.pose.orientation.z, msg.pose.pose.orientation.w])
+    # q_rot = tf.transformations.quaternion_from_euler(0, 0, 1.57)  
+    # q_new = tf.transformations.quaternion_multiply(q_rot,[msg.pose.pose.orientation.x, msg.pose.pose.orientation.y, msg.pose.pose.orientation.z, msg.pose.pose.orientation.w])
     
-    msg.pose.pose.orientation.x = q_new[0]
-    msg.pose.pose.orientation.y = q_new[1]
-    msg.pose.pose.orientation.z = q_new[2]
-    msg.pose.pose.orientation.w = q_new[3]
+    # msg.pose.pose.orientation.x = q_new[0]
+    # msg.pose.pose.orientation.y = q_new[1]
+    # msg.pose.pose.orientation.z = q_new[2]
+    # msg.pose.pose.orientation.w = q_new[3]
 
     #rotate linear velocity 90 deg around z-axis
-    lin = np.dot(rotationNeg90Deg,np.array([msg.twist.twist.linear.x, msg.twist.twist.linear.y]))
-    msg.twist.twist.linear.x = lin[0]
-    msg.twist.twist.linear.y = lin[1]
+    # lin = np.dot(rotationNeg90Deg,np.array([msg.twist.twist.linear.x, msg.twist.twist.linear.y]))
+    # msg.twist.twist.linear.x = lin[0]
+    # msg.twist.twist.linear.y = lin[1]
 
     self.pub.publish(msg)
 
