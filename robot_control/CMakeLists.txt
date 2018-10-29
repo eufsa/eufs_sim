@@ -11,10 +11,11 @@ find_package(catkin REQUIRED COMPONENTS
   tf
   diagnostic_msgs
   diagnostic_updater
+  autorally_msgs
 )
 
 catkin_package(
- CATKIN_DEPENDS ackermann_msgs
+ CATKIN_DEPENDS ackermann_msgs autorally_msgs
 )
 
 include_directories(

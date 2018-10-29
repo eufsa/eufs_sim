@@ -8,6 +8,7 @@
   <arg name="debug" default="false"/>
   <arg name="gui" default="true"/>
   <arg name="cmd_timeout" default="0.5"/>
+    <arg name="verbose" default="true"/>
   
   <!-- Vehicle pose -->
   <arg name="x" default="0"/>
@@ -27,6 +28,7 @@
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="headless" value="false"/>
+    <arg name="verbose" value="$(arg verbose)"/>
   </include>
 
   <!-- Load the URDF into the ROS Parameter Server -->

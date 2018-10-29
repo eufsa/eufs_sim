@@ -1,0 +1,463 @@
+<?xml version="1.0"?>
+
+<!-- 
+This file defines a model of the ADS-DV car provided by Formula Student UK.
+It is derived from the ackermann_vehicle_gazebo ROS package available at
+https://github.com/jbpassot/ackermann_vehicle
+
+Lengths are measured in meters, angles are measured in radians, and masses are
+measured in kilograms. All of these values are approximations.
+
+To work with Gazebo, each link must have an inertial element, even if
+the link only serves to connect two joints. To be visible in Gazebo, a link
+must have a collision element. Furthermore, the link must have a Gazebo
+material.
+
+Copyright (c) 2011-2014 Wunderkammer Laboratory
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<robot name="eufs_platform" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- Degree-to-radian conversions -->
+  <xacro:property name="degrees_45" value="0.785398163"/>
+  <xacro:property name="degrees_21" value="0.3665191429"/>
+  <xacro:property name="degrees_90" value="1.57079633"/>
+  <xacro:property name="degrees_180" value="3.14159265"/>
+
+  <!-- chassis_length is measured along the x axis, chassis_width
+       along the y axis, and chassis_height along the z axis. -->
+  <xacro:property name="chassis_length" value="0.0"/>  <!-- used to poition car mesh -->
+  <xacro:property name="chassis_width" value="0.25"/>  <!-- not used -->
+  <xacro:property name="chassis_height" value="0.25"/> <!-- not used -->
+  <xacro:property name="chassis_mass" value="125"/>    <!-- used for physics dynamics -->
+
+  <!-- max steering angle and speed define the limits of the simulated vehicle -->
+  <xacro:property name="max_steering_angle" value="0.4747296"/>  <!-- 27.2 deg -->
+  <xacro:property name="max_speed" value="50"/>  <!-- m/s -->
+
+  <!--
+  tire_dia:   diameter of the full wheel; used for mesh generation
+  hub_dia:    diameter of everything on the wheel except the tyre itself
+  tire_width: width of the tyre; used for mesh generation and dynamics
+  wheel_mass: weight of the wheel; used for simulating dynamics 
+  -->
+  <xacro:property name="hub_dia" value="0.3302"/>
+  <xacro:property name="tire_dia" value="0.505"/>
+  <xacro:property name="tire_width" value="0.18288"/>
+  <xacro:property name="wheel_mass" value="10"/>
+
+  <!-- 
+  hex_hub_dist: distance between left and right hex hubs when
+                the shock absorbers are fully extended
+  axle_length: is the distance from a U joint to the corresponding hex hub
+  wheel_travel: is the vertical wheel travel from suspension
+  shock_z_offset: how much higher is the shock from the chassis
+  -->
+  <xacro:property name="wheelbase" value="1.55"/>
+  <xacro:property name="hex_hub_dist" value="1.360"/>
+  <xacro:property name="axle_length" value="0.120"/>
+  <xacro:property name="front_wheel_travel" value="0.05"/>
+  <xacro:property name="front_shock_z_offset" value="-0.1"/>
+  <xacro:property name="rear_wheel_travel" value="0.05"/>
+  <xacro:property name="rear_shock_z_offset" value="-0.1"/>
+
+  <!-- 
+  shock_eff_limit: 2 * ((shock_stroke / 2) * shock_spring_constant)
+  shock_vel_lmitt: good default is 1000
+  -->
+  <xacro:property name="front_shock_eff_limit" value="500"/>
+  <xacro:property name="rear_shock_eff_limit" value="500"/>
+  <xacro:property name="shock_vel_limit" value="1000"/>
+
+  <xacro:property name="wheel_joint_damping" value="0.2" />
+  <xacro:property name="wheel_joint_friction" value="0.7" />
+
+  <xacro:property name="suspension_joint_damping" value="10" />
+  <xacro:property name="suspension_joint_friction" value="0.7" />
+
+  <!-- 
+  final_gear_ratio = X
+  stall_torque = 0.549 N m
+  axle_eff_limit = ((2 * stall_torque) * final_gear_ratio) / 4 
+  axle_vel_limit = (2 * pi) * (max_speed / (pi * tire_dia))
+  Ref for axle eff limit: https://static1.squarespace.com/static/57e8888fc534a547699d733d/t/5966f20436e5d3eb435c12a4/1499918855460/Rear+Drivetrain+Design+Overview.pdf
+  -->
+  <xacro:property name="front_axle_eff_limit" value="60"/>
+  <xacro:property name="rear_axle_eff_limit" value="60"/>
+  <xacro:property name="axle_vel_limit" value="${2*max_speed/tire_dia}"/>
+
+  <xacro:property name="servo_stall_torque" value="20"/>
+  <xacro:property name="servo_no_load_speed" value="20"/>
+
+  <!-- arg to specify namespace -->
+  <xacro:arg name="prefix" default=""/>
+
+  <!-- This is needed to make the model work with Gazebo. -->
+  <xacro:macro name="null_inertial">
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+  </xacro:macro>
+
+  <!-- Inertia of a thick-walled cylindrical tube with open ends. Height is
+       measured along the z axis, which is the tube's axis. inner_rad and
+       outer_rad are the tube's inner and outer radii, respectively. Pitch
+       MOI is calculated from platform calibration data using bifilar pendulum
+       method -->
+  <xacro:macro name="thick_walled_tube_inertial"
+               params="inner_rad outer_rad height mass">
+    <inertial>
+      <mass value="${mass}"/>
+      <inertia ixx="${(1 / 12) * mass * (3 * (inner_rad * inner_rad +
+                    outer_rad * outer_rad) + height * height)}"
+               ixy="0" ixz="0"
+               iyy="${(1 / 12) * mass * (3 * (inner_rad * inner_rad +
+                    outer_rad * outer_rad) + height * height)}"
+               iyz="0"
+               izz="${mass * (inner_rad * inner_rad +
+                    outer_rad * outer_rad) / 2}"/>
+    </inertial>
+  </xacro:macro>
+
+
+  <!-- Shock absorbers -->
+  <xacro:macro name="front_shock"
+               params="lr_prefix fr_prefix lr_reflect fr_reflect child">
+    <joint name="${lr_prefix}_${fr_prefix}_shock" type="prismatic">
+      <parent link="chassis"/>
+      <child link="${child}"/>
+
+      <origin xyz="${fr_reflect * wheelbase / 2}
+                   ${lr_reflect * ((hex_hub_dist / 2) - axle_length)}
+                   ${front_shock_z_offset/2}"/>
+      <axis xyz="0 0 -1"/>
+      <limit lower="${-front_wheel_travel / 2}" upper="${front_wheel_travel / 2}"
+             effort="${front_shock_eff_limit}" velocity="${shock_vel_limit}"/>
+      <dynamics damping="${suspension_joint_damping}" friction="${suspension_joint_friction}"/>
+    </joint>
+    <transmission name="${lr_prefix}_${fr_prefix}_shock_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${lr_prefix}_${fr_prefix}_shock">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${lr_prefix}_${fr_prefix}_shock_act">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  </xacro:macro>
+
+  <xacro:macro name="rear_shock"
+               params="lr_prefix fr_prefix lr_reflect fr_reflect child">
+    <joint name="${lr_prefix}_${fr_prefix}_shock" type="prismatic">
+      <parent link="chassis"/>
+      <child link="${child}"/>
+
+      <origin xyz="${fr_reflect * wheelbase / 2}
+                   ${lr_reflect * ((hex_hub_dist / 2) - axle_length)}
+                   ${rear_shock_z_offset/2}"/>
+      <axis xyz="0 0 -1"/>
+      <limit lower="${-rear_wheel_travel / 2}" upper="${rear_wheel_travel / 2}"
+             effort="${rear_shock_eff_limit}" velocity="${shock_vel_limit}"/>
+      <dynamics damping="${suspension_joint_damping}" friction="${suspension_joint_friction}"/>
+    </joint>
+    <transmission name="${lr_prefix}_${fr_prefix}_shock_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${lr_prefix}_${fr_prefix}_shock">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${lr_prefix}_${fr_prefix}_shock_act">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  </xacro:macro>
+
+  <!-- The "wheel" macro defines an axle carrier, axle, and wheel. -->
+  <xacro:macro name="wheel" params="lr_prefix fr_prefix lr_reflect tire_width wheel_mass axle_eff_limit">
+    <link name="${lr_prefix}_${fr_prefix}_axle_carrier">
+      <xacro:null_inertial/>
+    </link>
+
+    <!-- The left and right axles have the same axis so that identical
+         rotation values cause the wheels to rotate in the same direction. -->
+    <joint name="${lr_prefix}_${fr_prefix}_axle" type="continuous">
+      <parent link="${lr_prefix}_${fr_prefix}_axle_carrier"/>
+      <child link="${lr_prefix}_${fr_prefix}_wheel"/>
+      <origin rpy="${degrees_90} 0 0"/>
+      <axis xyz="0 0 -1"/>
+      <limit effort="${axle_eff_limit}" velocity="${axle_vel_limit}"/>
+      <dynamics damping="${wheel_joint_damping}" friction="${wheel_joint_friction}"/>
+    </joint>
+
+    <transmission name="${lr_prefix}_${fr_prefix}_axle_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${lr_prefix}_${fr_prefix}_axle">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${lr_prefix}_${fr_prefix}_axle_act">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <link name="${lr_prefix}_${fr_prefix}_wheel">
+      <visual>
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="${tire_dia / 2}" length="${tire_width}"/>
+        </geometry>
+      </visual>
+
+      <collision name="${lr_prefix}_${fr_prefix}_wheel_collision">
+        <origin xyz="0 0 0"/>
+        <geometry>
+          <cylinder radius="${tire_dia / 2}" length="${tire_width}"/>
+        </geometry>
+      </collision>
+
+      <xacro:thick_walled_tube_inertial
+          inner_rad="${hub_dia / 2.0}" outer_rad="${tire_dia / 2.0}"
+          height="${tire_width}" mass="${wheel_mass}"/>
+      <max_contacts>1</max_contacts>
+      <surface>
+        <contact>
+          <ode>
+            <soft_cfm>0.000000001</soft_cfm>
+            <soft_erp>0.2</soft_erp>
+            <kp>1e+10</kp>
+            <kd>10</kd>
+            <max_vel>0.01</max_vel>
+            <min_depth>0.005</min_depth>
+          </ode>
+        </contact>
+      </surface>
+
+    </link>
+
+    <gazebo reference="${lr_prefix}_${fr_prefix}_wheel">
+      <mu1>0.7</mu1>
+      <mu2>0.75</mu2>
+      <material>Gazebo/Black</material>
+    </gazebo>
+
+  </xacro:macro>
+
+  <!-- Front wheel -->
+  <xacro:macro name="front_wheel"
+               params="lr_prefix fr_prefix lr_reflect fr_reflect tire_width
+                       wheel_mass axle_eff_limit">
+    <xacro:front_shock lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
+                       lr_reflect="${lr_reflect}" fr_reflect="${fr_reflect}"
+                       child="${lr_prefix}_steering_link"/>
+
+    <link name="${lr_prefix}_steering_link">
+      <xacro:null_inertial/>
+    </link>
+
+    <joint name="${lr_prefix}_steering_joint" type="revolute">
+      <parent link="${lr_prefix}_steering_link"/>
+      <child link="${lr_prefix}_${fr_prefix}_axle_carrier"/>
+      <!-- cant the front wheels to improve traction -->
+      <axis xyz="0 ${-lr_reflect*0.09950372}  0.99503719"/>
+      <limit lower="${-max_steering_angle}" upper="${max_steering_angle}"
+             effort="${servo_stall_torque}" velocity="${servo_no_load_speed}"/>
+    </joint>
+
+    <transmission name="${lr_prefix}_steering_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${lr_prefix}_steering_joint">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${lr_prefix}_steering_act">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <xacro:wheel lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
+                 lr_reflect="${lr_reflect}" tire_width="${tire_width}"
+                 wheel_mass="${wheel_mass}"
+                 axle_eff_limit="${axle_eff_limit}"
+                 />
+  </xacro:macro>
+
+  <!-- Rear wheel -->
+  <xacro:macro name="rear_wheel"
+               params="lr_prefix fr_prefix lr_reflect fr_reflect tire_width
+                       wheel_mass axle_eff_limit">
+    <xacro:rear_shock lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
+                 lr_reflect="${lr_reflect}" fr_reflect="${fr_reflect}"
+                 child="${lr_prefix}_${fr_prefix}_axle_carrier"/>
+    <xacro:wheel lr_prefix="${lr_prefix}" fr_prefix="${fr_prefix}"
+                 lr_reflect="${lr_reflect}" tire_width="${tire_width}"
+                 wheel_mass="${wheel_mass}"
+                 axle_eff_limit="${axle_eff_limit}"/>
+  </xacro:macro>
+
+  <!-- base_link must have geometry so that its axes can be displayed in rviz. -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <!-- Chassis -->
+  <link name="chassis">
+    <visual>
+      <origin xyz="${-chassis_length/2} 0 0"
+              rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://eufs_description/meshes/ads-dv.dae" scale="1 1 1" />
+      </geometry>
+    </visual>
+
+    <collision>
+      <origin xyz="${-chassis_length/2} 0 0"
+              rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://eufs_description/meshes/ads-dv.dae" scale="1 1 1" />
+      </geometry>
+    </collision>
+
+    <inertial>
+      <mass value="${chassis_mass}"/>
+      <!-- <pose> 0.181796 0 0 0 0 0 </pose> -->
+      <inertia ixx="0.024290532"
+               ixy="0" ixz="0"
+               iyy="0.242298057"
+               iyz="0"
+               izz="0.242448658"/>
+    </inertial>
+  </link>
+  <gazebo reference="chassis">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+  </gazebo>
+
+  <joint name="base_link_to_chasis" type="fixed">
+    <axis xyz="0 -1 -1" />
+    <parent link="base_link"/>
+    <child link="chassis"/>
+  </joint>
+
+ <link name="odom_ground_truth">
+    <collision>
+      <geometry>
+        <box size="0.1 0.1 0.1"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+
+  <joint name="odom_ground_truth_joint" type="fixed">
+    <axis xyz="0 0 0" />
+    <origin xyz="-0.039 0 0.0859" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="odom_ground_truth"/>
+  </joint>
+
+  <!-- Wheels -->
+  <xacro:front_wheel lr_prefix="left" fr_prefix="front"
+                     lr_reflect="1" fr_reflect="1"
+                     tire_width="${tire_width}"
+                     wheel_mass="${wheel_mass}"
+                     axle_eff_limit="${front_axle_eff_limit}"/>
+  <xacro:front_wheel lr_prefix="right" fr_prefix="front"
+                     lr_reflect="-1" fr_reflect="1"
+                     tire_width="${tire_width}"
+                     wheel_mass="${wheel_mass}"
+                     axle_eff_limit="${front_axle_eff_limit}"/>
+  <xacro:rear_wheel lr_prefix="left" fr_prefix="rear"
+                    lr_reflect="1" fr_reflect="-1"
+                    tire_width="${tire_width}"
+                    wheel_mass="${wheel_mass}"
+                    axle_eff_limit="${rear_axle_eff_limit}"/>
+  <xacro:rear_wheel lr_prefix="right" fr_prefix="rear"
+                    lr_reflect="-1" fr_reflect="-1"
+                    tire_width="${tire_width}"
+                    wheel_mass="${wheel_mass}"
+                    axle_eff_limit="${rear_axle_eff_limit}"/>
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>$(arg prefix)</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+
+    <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
+      <alwaysOn>true</alwaysOn>
+      <updateRate>200.0</updateRate>
+      <bodyName>odom_ground_truth</bodyName>
+      <topicName>ground_truth/state_raw</topicName>
+      <gaussianNoise>0.00</gaussianNoise>
+      <frameName>world</frameName>
+      <!-- origin is at spawn location -->
+      <xyzOffset>0 0 0</xyzOffset>
+      <rpyOffset>0 0 0</rpyOffset>
+    </plugin>
+
+    <plugin name="tire_friction" filename="libTireFrictionPlugin.so">
+      <link_name>left_rear_wheel</link_name>
+      <collision_name>left_rear_wheel_collision</collision_name>
+      <friction_static>1.1</friction_static>
+      <friction_dynamic>0.7</friction_dynamic>
+      <slip_static>0.10</slip_static>
+      <slip_dynamic>0.20</slip_dynamic>
+      <speed_static>0.50</speed_static>
+    </plugin>
+
+    <plugin name="tire_friction" filename="libTireFrictionPlugin.so">
+      <link_name>right_rear_wheel</link_name>
+      <collision_name>right_rear_wheel_collision</collision_name>
+      <friction_static>1.1</friction_static>
+      <friction_dynamic>0.7</friction_dynamic>
+      <slip_static>0.10</slip_static>
+      <slip_dynamic>0.20</slip_dynamic>
+      <speed_static>0.50</speed_static>
+    </plugin>
+
+    <plugin name="tire_friction" filename="libTireFrictionPlugin.so">
+      <link_name>left_front_wheel</link_name>
+      <collision_name>left_front_wheel_collision</collision_name>
+      <friction_static>1.1</friction_static>
+      <friction_dynamic>0.7</friction_dynamic>
+      <slip_static>0.10</slip_static>
+      <slip_dynamic>0.20</slip_dynamic>
+      <speed_static>0.50</speed_static>
+    </plugin>
+
+    <plugin name="tire_friction" filename="libTireFrictionPlugin.so">
+      <link_name>right_front_wheel</link_name>
+      <collision_name>right_front_wheel_collision</collision_name>
+      <friction_static>1.1</friction_static>
+      <friction_dynamic>0.7</friction_dynamic>
+      <slip_static>0.10</slip_static>
+      <slip_dynamic>0.20</slip_dynamic>
+      <speed_static>0.50</speed_static>
+    </plugin>
+
+
+    
+
+  </gazebo>
+</robot>

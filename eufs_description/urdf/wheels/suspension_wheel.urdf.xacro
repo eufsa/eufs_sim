@@ -195,8 +195,6 @@
   </xacro:macro>
 
 
-  <!-- xacro:macro name="rubber_wheel" params="name parent *origin reflect hq" -->
-
   <!-- Front wheel -->
   <xacro:macro name="front_wheel"
                params="lr_prefix fr_prefix lr_reflect fr_reflect">

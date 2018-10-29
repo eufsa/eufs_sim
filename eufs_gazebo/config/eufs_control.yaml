@@ -1,6 +1,5 @@
 eufs:
   left_front_shock_controller:
-#    type: velocity_controllers/JointVelocityController
     type: effort_controllers/JointEffortController
     joint: left_front_shock
     pid: {p: 500.0, i: 10.0, d: 100.0}
@@ -12,7 +11,6 @@ eufs:
     
   #traction
   left_front_axle_controller:
-#    type: effort_controllers/JointEffortController
     type: velocity_controllers/JointVelocityController
     joint: left_front_axle
     pid: {p: 1500.0, i: 100.0, d: 750.0}
@@ -29,7 +27,6 @@ eufs:
     
   #traction
   right_front_axle_controller:
-#    type: effort_controllers/JointEffortController
     type: velocity_controllers/JointVelocityController
     joint: right_front_axle
     pid: {p: 1500.0, i: 100.0, d: 750.0}
@@ -41,7 +38,6 @@ eufs:
 
   # traction
   left_rear_axle_controller:
-#    type: effort_controllers/JointEffortController
     type: velocity_controllers/JointVelocityController
     joint: left_rear_axle
     pid: {p: 1500.0, i: 100.0, d: 750.0}
@@ -53,7 +49,6 @@ eufs:
 
   # traction
   right_rear_axle_controller:
-#    type: effort_controllers/JointEffortController
     type: velocity_controllers/JointVelocityController
     joint: right_rear_axle
     pid: {p: 1500.0, i: 100.0, d: 750.0}
