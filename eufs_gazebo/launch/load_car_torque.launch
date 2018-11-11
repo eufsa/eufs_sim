@@ -1,48 +1,49 @@
 <?xml version="1.0"?>
 <launch>
 
-  <!-- roslaunch arguments -->
-  <arg name="namespace" default=""/>
-  <arg name="cmd_timeout" default="0.5"/>
-  
-  <!-- Vehicle pose -->
-  <arg name="x" default="0"/>
-  <arg name="y" default="0"/>
-  <arg name="z" default="0.3"/>
-  <arg name="roll" default="0.0"/>
-  <arg name="pitch" default="0.0"/>
-  <arg name="yaw" default="0.0"/>
+      <!-- roslaunch arguments -->
+      <arg name="namespace" default=""/>
+      <arg name="cmd_timeout" default="0.5"/>
+      <arg name="use_ground_truth" default="true"/>
 
-  <!-- Load the URDF into the ROS Parameter Server -->
-  <param command="$(find xacro)/xacro '$(find eufs_description)/robots/ads-dv-torque.urdf.xacro' --inorder" name="robot_description"/>
+      <!-- Vehicle pose -->
+      <arg name="x" default="0"/>
+      <arg name="y" default="0"/>
+      <arg name="z" default="0.3"/>
+      <arg name="roll" default="0.0"/>
+      <arg name="pitch" default="0.0"/>
+      <arg name="yaw" default="0.0"/>
 
-  <node name="robot_state_publisher" pkg="robot_state_publisher"
-        type="robot_state_publisher">
-    <param name="publish_frequency" value="50.0"/>
-  </node>
+      <!-- Load the URDF into the ROS Parameter Server -->
+      <param command="$(find xacro)/xacro '$(find eufs_description)/robots/ads-dv-torque.urdf.xacro' --inorder" name="robot_description"/>
 
-  <node name="spawn_platform" pkg="gazebo_ros" type="spawn_model"
-        args="-urdf -param robot_description -model $(arg namespace)
+      <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+            <param name="publish_frequency" value="50.0"/>
+      </node>
+
+      <node name="spawn_platform" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model $(arg namespace)
               -gazebo_namespace /gazebo
               -x $(arg x) -y $(arg y) -z $(arg z)
               -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)"/>
 
-  <!-- load joint controllers -->
-  <node name="controller_spawner" pkg="controller_manager" type="spawner"
-          args="$(find robot_control)/config/joint_controller.yaml"/>
+      <!-- load joint controllers -->
+      <node name="controller_spawner" pkg="controller_manager" type="spawner" args="$(find robot_control)/config/joint_controller.yaml"/>
 
-  <!-- Control the steering, axle, and shock absorber joints. -->
-  <node name="ackermann_controller" pkg="robot_control"
-        type="ackermann_controller.py" output="screen">
-    <param name="cmd_timeout" value="$(arg cmd_timeout)"/>
-    <param name="vehicle_prefix" value="$(arg namespace)"/>
-    <rosparam file="$(find robot_control)/config/ackermann_controller.yaml" command="load"/>
-    <rosparam param="chassisCommandProirities" command="load" file="$(find robot_control)/config/chassisCommandPriorities.yaml"/>
-  </node>
+      <!-- Control the steering, axle, and shock absorber joints. -->
+      <node name="ackermann_controller" pkg="robot_control" type="ackermann_controller.py" output="screen">
+            <param name="cmd_timeout" value="$(arg cmd_timeout)"/>
+            <param name="vehicle_prefix" value="$(arg namespace)"/>
+            <rosparam file="$(find robot_control)/config/ackermann_controller.yaml" command="load"/>
+            <rosparam param="driveCommandProirities" command="load" file="$(find robot_control)/config/driveCommandPriorities.yaml"/>
+      </node>
 
-  <!-- Run ground truth pose publishing -->
-  <node name="grount_truth_republisher" pkg="eufs_gazebo"
-        type="ground_truth_republisher.py" output="screen">
-  </node>
+      <group if="$(arg use_ground_truth)">
+            <!-- Run ground truth pose publishing -->
+            <node name="grount_truth_republisher" pkg="eufs_gazebo" type="ground_truth_republisher.py" output="screen">
+            </node>
+
+            <node name="message_to_tf" pkg="message_to_tf" type="message_to_tf" output="screen" args="/ground_truth/state">
+            </node>
+      </group>
 
 </launch>

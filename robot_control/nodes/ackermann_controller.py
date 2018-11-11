@@ -8,7 +8,7 @@ https://github.com/jbpassot/ackermann_vehicle
 
 
 Subscribed Topics:
-  chassisCommand (autorally_msgs/chassisCommand)
+  driveCommand2 (autorally_msgs/driveCommand2)
     Actuator command to control all actuators, valid values [-1, 1]
   runstop (autorally_msgs/runstop)
     Whether the vehicle can move or not
@@ -129,527 +129,595 @@ from controller_manager_msgs.srv import ListControllers
 from gazebo_msgs.msg import ModelStates
 from sensor_msgs.msg import JointState
 
-from autorally_msgs.msg import chassisCommand
-from autorally_msgs.msg import chassisState
+from eufs_msgs.msg import driveCommand2
+from eufs_msgs.msg import chassisState
 from autorally_msgs.msg import runstop
-from autorally_msgs.msg import wheelSpeeds
+from eufs_msgs.msg import wheelSpeeds
+
 
 class AckermannController(object):
-  """
-  An object of class AckermannController is a node that controls the wheels of a
-  vehicle with Ackermann steering.
-  """
+    """
+    An object of class AckermannController is a node that controls the wheels of a
+    vehicle with Ackermann steering.
+    """
 
-  def __init__(self, namespace='controller_manager'):
-      """Initialize this AckermannController."""
+    def __init__(self, namespace='controller_manager'):
+        """Initialize this AckermannController."""
 
-      rospy.init_node("ackermann_controller")
+        rospy.init_node("ackermann_controller")
 
-      # Parameters
-      self.max_steering_angle = 27.2
+        # Wheels
+        (left_steer_link_name, left_steer_ctrlr_name,
+         left_front_axle_ctrlr_name, self._left_front_inv_circ) = \
+            self._get_front_wheel_params("left")
+        (right_steer_link_name, right_steer_ctrlr_name,
+         right_front_axle_ctrlr_name, self._right_front_inv_circ) = \
+            self._get_front_wheel_params("right")
+        (left_rear_link_name, left_rear_axle_ctrlr_name,
+         self._left_rear_inv_circ) = \
+            self._get_rear_wheel_params("left")
+        (self._right_rear_link_name, right_rear_axle_ctrlr_name,
+         self._right_rear_inv_circ) = \
+            self._get_rear_wheel_params("right")
 
-      # Wheels
-      (left_steer_link_name, left_steer_ctrlr_name,
-       left_front_axle_ctrlr_name, self._left_front_inv_circ) = \
-       self._get_front_wheel_params("left")
-      (right_steer_link_name, right_steer_ctrlr_name,
-       right_front_axle_ctrlr_name, self._right_front_inv_circ) = \
-       self._get_front_wheel_params("right")
-      (left_rear_link_name, left_rear_axle_ctrlr_name,
-       self._left_rear_inv_circ) = \
-       self._get_rear_wheel_params("left")
-      (self._right_rear_link_name, right_rear_axle_ctrlr_name,
-       self._right_rear_inv_circ) = \
-       self._get_rear_wheel_params("right")
+        list_ctrlrs = rospy.ServiceProxy(namespace + '/list_controllers',
+                                         ListControllers)
+        list_ctrlrs.wait_for_service()
 
-      list_ctrlrs = rospy.ServiceProxy(namespace + '/list_controllers',
-                                       ListControllers)
-      list_ctrlrs.wait_for_service()
+        # Shock absorbers
+        shock_param_list = rospy.get_param("~shock_absorbers", [])
+        self._shock_pubs = []
+        try:
+            for shock_params in shock_param_list:
+                try:
+                    ctrlr_name = shock_params["controller_name"]
+                    try:
+                        eq_pos = shock_params["equilibrium_position"]
+                    except:
+                        eq_pos = self._DEF_EQ_POS
+                    eq_pos = float(eq_pos)
+                except:
+                    rospy.logwarn("An invalid parameter was specified for a "
+                                  "shock absorber. The shock absorber will "
+                                  "not be used.")
+                    continue
 
-      # Shock absorbers
-      shock_param_list = rospy.get_param("~shock_absorbers", [])
-      self._shock_pubs = []
-      try:
-          for shock_params in shock_param_list:
-              try:
-                  ctrlr_name = shock_params["controller_name"]
-                  try:
-                      eq_pos = shock_params["equilibrium_position"]
-                  except:
-                      eq_pos = self._DEF_EQ_POS
-                  eq_pos = float(eq_pos)
-              except:
-                  rospy.logwarn("An invalid parameter was specified for a "
-                                "shock absorber. The shock absorber will "
-                                "not be used.")
-                  continue
+                pub = rospy.Publisher(ctrlr_name + "/command", Float64,
+                                      latch=True, queue_size=1)
+                _wait_for_ctrlr(list_ctrlrs, ctrlr_name)
+                pub.publish(eq_pos)
+                self._shock_pubs.append(pub)
+        except:
+            rospy.logwarn("The specified list of shock absorbers is invalid. "
+                          "No shock absorbers will be used.")
 
-              pub = rospy.Publisher(ctrlr_name + "/command", Float64,
-                                    latch=True, queue_size=1)
-              _wait_for_ctrlr(list_ctrlrs, ctrlr_name)
-              pub.publish(eq_pos)
-              self._shock_pubs.append(pub)
-      except:
-          rospy.logwarn("The specified list of shock absorbers is invalid. "
-                        "No shock absorbers will be used.")
+        # Max steering angle
+        try:
+            self._max_steering_angle = float(rospy.get_param("~max_steering_angle",
+                                                self._DEF_MAX_STEERING_ANGLE))
+        except:
+            rospy.logwarn("The specified max steering angel value is invalid. "
+                          "The default value will be used instead.")
+            self._max_steering_angle = self._DEF_MAX_STEERING_ANGLE
 
-      # Command timeout
-      try:
-          self._cmd_timeout = float(rospy.get_param("~cmd_timeout",
-                                                    self._DEF_CMD_TIMEOUT))
-      except:
-          rospy.logwarn("The specified command timeout value is invalid. "
-                        "The default timeout value will be used instead.")
-          self._cmd_timeout = self._DEF_CMD_TIMEOUT
+        # Effective track
+        try:
+            self._effective_track = float(rospy.get_param("~effective_track",
+                                                self._DEF_EFFECTIVE_TRACK))
+        except:
+            rospy.logwarn("The specified effective track value is invalid. "
+                          "The default value will be used instead.")
+            self._effective_track = self._DEF_EFFECTIVE_TRACK
 
-      try:
-          self._vehicle_prefix = rospy.get_param("~vehicle_prefix")
-          if self._vehicle_prefix != "":
-              self._vehicle_prefix = "/" + self._vehicle_prefix
-      except:
-          rospy.logwarn("The specified namespace value is invalid. "
-                        "The default timeout value will be used instead.")
-          self._vehicle_prefix = ""
+        # Command timeout
+        try:
+            self._cmd_timeout = float(rospy.get_param("~cmd_timeout",
+                                                      self._DEF_CMD_TIMEOUT))
+        except:
+            rospy.logwarn("The specified command timeout value is invalid. "
+                          "The default timeout value will be used instead.")
+            self._cmd_timeout = self._DEF_CMD_TIMEOUT
 
-      # Publishing frequency
-      try:
-          pub_freq = float(rospy.get_param("~publishing_frequency",
-                                           self._DEF_PUB_FREQ))
-          if pub_freq <= 0.0:
-              raise ValueError()
-      except:
-          rospy.logwarn("The specified publishing frequency is invalid. "
-                        "The default frequency will be used instead.")
-          pub_freq = self._DEF_PUB_FREQ
-      self._sleep_timer = rospy.Rate(pub_freq)
+        # Vehicle prefix (namespace)
+        try:
+            self._vehicle_prefix = rospy.get_param("~vehicle_prefix")
+            if self._vehicle_prefix != "":
+                self._vehicle_prefix = "/" + self._vehicle_prefix
+        except:
+            rospy.logwarn("The specified namespace value is invalid. "
+                          "The default timeout value will be used instead.")
+            self._vehicle_prefix = ""
 
-      # _last_cmd_time is the time at which the most recent Ackermann
-      # driving command was received.
-      self._last_cmd_time = rospy.get_time()
+        # Publishing frequency
+        try:
+            pub_freq = float(rospy.get_param("~publishing_frequency",
+                                             self._DEF_PUB_FREQ))
+            if pub_freq <= 0.0:
+                raise ValueError()
+        except:
+            rospy.logwarn("The specified publishing frequency is invalid. "
+                          "The default frequency will be used instead.")
+            pub_freq = self._DEF_PUB_FREQ
+        self._sleep_timer = rospy.Rate(pub_freq)
 
-      self._last_steer_ang = 0.0  # Last steering angle
-      self._theta_left = 0.0      # Left steering joint angle
-      self._theta_right = 0.0     # Right steering joint angle
+        # _last_cmd_time is the time at which the most recent Ackermann
+        # driving command was received.
+        self._last_cmd_time = rospy.get_time()
 
-      self._last_speed = 0.0
-      self._last_accel_limit = 0.0  # Last acceleration limit
-      # Axle angular velocities
-      self._left_front_ang_vel = 0.0
-      self._right_front_ang_vel = 0.0
-      self._left_rear_ang_vel = 0.0
-      self._right_rear_ang_vel = 0.0
+        self._last_steer_ang = 0.0  # Last steering angle
+        self._theta_left = 0.0      # Left steering joint angle
+        self._theta_right = 0.0     # Right steering joint angle
 
-      # _joint_dist_div_2 is the distance between the steering joints,
-      # divided by two.
-      tfl = tf.TransformListener()
-      ls_pos = self._get_link_pos(tfl, left_steer_link_name)
-      rs_pos = self._get_link_pos(tfl, right_steer_link_name)
-      self._joint_dist_div_2 = numpy.linalg.norm(ls_pos - rs_pos) / 2
-      print("Joist dist 2 is", self._joint_dist_div_2)
-      lrw_pos = self._get_link_pos(tfl, left_rear_link_name)
-      rrw_pos = numpy.array([0.0] * 3)
-      front_cent_pos = (ls_pos + rs_pos) / 2     # Front center position
-      rear_cent_pos = (lrw_pos + rrw_pos) / 2    # Rear center position
-      self._wheelbase = numpy.linalg.norm(front_cent_pos - rear_cent_pos)
-      self._inv_wheelbase = 1 / self._wheelbase  # Inverse of _wheelbase
-      self._wheelbase_sqr = self._wheelbase ** 2
+        self._last_speed = 0.0
+        self._last_accel_limit = 0.0  # Last acceleration limit
 
-      #self.lastCmdTime = rospy.get_time()
-      self.chassisCmds = dict()
-      self.chassisCmdLock = threading.Lock()
+        # Axle angular velocities
+        self._left_front_ang_vel = 0.0
+        self._right_front_ang_vel = 0.0
+        self._left_rear_ang_vel = 0.0
+        self._right_rear_ang_vel = 0.0
 
-      #load chassis commander priorities
-      self.commandPriorities = rospy.get_param("~chassisCommandProirities", [])
-      self.commandPriorities = sorted(self.commandPriorities.items(), key=operator.itemgetter(1))
-      rospy.loginfo("AckermannController: Loaded %d chassis commanders", len(self.commandPriorities))
+        # _joint_dist_div_2 is the distance between the steering joints,
+        # divided by two.
+        tfl = tf.TransformListener()
+        ls_pos = self._get_link_pos(tfl, left_steer_link_name)
+        rs_pos = self._get_link_pos(tfl, right_steer_link_name)
+        self._joint_dist_div_2 = numpy.linalg.norm(ls_pos - rs_pos) / 2
+        lrw_pos = self._get_link_pos(tfl, left_rear_link_name)
+        rrw_pos = numpy.array([0.0] * 3)
+        front_cent_pos = (ls_pos + rs_pos) / 2     # Front center position
+        rear_cent_pos = (lrw_pos + rrw_pos) / 2    # Rear center position
+        self._wheelbase = numpy.linalg.norm(front_cent_pos - rear_cent_pos)
+        self._inv_wheelbase = 1 / self._wheelbase  # Inverse of _wheelbase
+        self._wheelbase_sqr = self._wheelbase ** 2
 
-      #runstop information
-      self.runstops = dict()
-      self.runstopLock = threading.Lock()
+        self.driveCommands = dict()
+        self.driveCommandLock = threading.Lock()
 
-      self.front_axle_max_effort = 30
-      self.front_axle_brake_effort = 30
-      self.rear_axle_max_effort = 30
-      self.rear_axle_brake_effort = 30
+        # load chassis commander priorities
+        self.commandPriorities = rospy.get_param(
+            "~driveCommandProirities", [])
+        self.commandPriorities = sorted(
+            self.commandPriorities.items(), key=operator.itemgetter(1))
+        rospy.loginfo("AckermannController: Loaded %d chassis commanders", len(
+            self.commandPriorities))
 
-      #self.rear_axle_reverse_percent = 0.25 # percent of max_effort applied when reversing
-      #self.rear_axle_reverse_effort = self.rear_axle_max_effort*self.rear_axle_reverse_percent
+        # runstop information
+        self.runstops = dict()
+        self.runstopLock = threading.Lock()
 
-      # Publishers and subscribers
-      self._left_steer_cmd_pub = \
-          _create_cmd_pub(list_ctrlrs, left_steer_ctrlr_name)
-      self._right_steer_cmd_pub = \
-          _create_cmd_pub(list_ctrlrs, right_steer_ctrlr_name)
+        self.front_axle_max_effort = 30
+        self.front_axle_brake_effort = 20
+        self.rear_axle_max_effort = 30
+        self.rear_axle_brake_effort = 20
 
-      self._left_front_axle_cmd_pub = \
-          _create_axle_cmd_pub(list_ctrlrs, left_front_axle_ctrlr_name)
-      self._right_front_axle_cmd_pub = \
-          _create_axle_cmd_pub(list_ctrlrs, right_front_axle_ctrlr_name)
-      self._left_rear_axle_cmd_pub = \
-          _create_axle_cmd_pub(list_ctrlrs, left_rear_axle_ctrlr_name)
-      self._right_rear_axle_cmd_pub = \
-          _create_axle_cmd_pub(list_ctrlrs, right_rear_axle_ctrlr_name)
+        # Publishers and subscribers
+        self._left_steer_cmd_pub = \
+            _create_cmd_pub(list_ctrlrs, left_steer_ctrlr_name)
+        self._right_steer_cmd_pub = \
+            _create_cmd_pub(list_ctrlrs, right_steer_ctrlr_name)
 
+        self._left_front_axle_cmd_pub = \
+            _create_axle_cmd_pub(list_ctrlrs, left_front_axle_ctrlr_name)
+        self._right_front_axle_cmd_pub = \
+            _create_axle_cmd_pub(list_ctrlrs, right_front_axle_ctrlr_name)
+        self._left_rear_axle_cmd_pub = \
+            _create_axle_cmd_pub(list_ctrlrs, left_rear_axle_ctrlr_name)
+        self._right_rear_axle_cmd_pub = \
+            _create_axle_cmd_pub(list_ctrlrs, right_rear_axle_ctrlr_name)
 
+        self.left_front_name, self.left_front_dia = self.getJointStateWheelParams(
+            'left', 'front')
+        self.right_front_name, self.right_front_dia = self.getJointStateWheelParams(
+            'right', 'front')
+        self.left_rear_name, self.left_rear_dia = self.getJointStateWheelParams(
+            'left', 'rear')
+        self.right_rear_name, self.right_rear_dia = self.getJointStateWheelParams(
+            'right', 'rear')
+        self.left_steer_name = "left_steering_joint"
+        self.right_steer_name = "right_steering_joint"
 
-      self.left_front_name, self.left_front_dia = self.getJointStateWheelParams('left', 'front')
-      self.right_front_name, self.right_front_dia = self.getJointStateWheelParams('right', 'front')
-      self.left_rear_name, self.left_rear_dia = self.getJointStateWheelParams('left', 'rear')
-      self.right_rear_name, self.right_rear_dia = self.getJointStateWheelParams('right', 'rear')
+        self.wheelSpeedFront = 0.0
 
-      self.wheelSpeedFront = 0.0
+        # don't set up callback until params are initialized
+        self.wheelSpeedsPub = rospy.Publisher(
+            self._vehicle_prefix + '/wheelSpeeds', wheelSpeeds, queue_size=1)
 
-      #don't set up callback until params are initialized
-      self.wheelSpeedsPub = rospy.Publisher(self._vehicle_prefix + '/wheelSpeeds', wheelSpeeds, queue_size=1)
+        self.chassisStatePub = rospy.Publisher(
+            self._vehicle_prefix + "/chassisState", chassisState, queue_size=1)
 
-      self.chassisStatePub = rospy.Publisher(self._vehicle_prefix + "/chassisState", chassisState, queue_size=1)
+        self.driveCommandSub = dict()
+        for cmd, priority in self.commandPriorities:
+            self.driveCommandSub[cmd] = \
+                rospy.Subscriber(self._vehicle_prefix+"/"+cmd+"/command", driveCommand2,
+                                 self.driveCommandCb, queue_size=1)
 
-      self.chassisCmdSub = dict()
-      for cmd, priority in self.commandPriorities:
-          self.chassisCmdSub[cmd] = \
-              rospy.Subscriber(self._vehicle_prefix+"/"+cmd+"/chassisCommand", chassisCommand,
-                               self.chassisCmdCb, queue_size=1)
+        self.runstopSub = rospy.Subscriber(
+            self._vehicle_prefix + "/runstop", runstop, self.runstopCb, queue_size=5)
 
-      self.runstopSub = rospy.Subscriber(self._vehicle_prefix + "/runstop", runstop, self.runstopCb, queue_size=5)
+        self.wheelSpeedSub = rospy.Subscriber(
+            self._vehicle_prefix + '/joint_states', JointState, self.wheelSpeedsCb)
 
-      self.wheelSpeedSub = rospy.Subscriber(self._vehicle_prefix + '/joint_states', JointState, self.wheelSpeedsCb)
+    def spin(self):
+        """Control the vehicle."""
 
-  def spin(self):
-    """Control the vehicle."""
+        last_time = rospy.get_time()
 
-    last_time = rospy.get_time()
+        while not rospy.is_shutdown():
+            t = rospy.get_time()
+            delta_t = t - last_time
+            last_time = t
 
-    while not rospy.is_shutdown():
-      t = rospy.get_time()
-      delta_t = t - last_time
-      last_time = t
+            # frontBrake = 0.0
+            # rearBrake = 0.0
+            speed_front = 0.0
+            speed_rear = 0.0
+            chassisSt = chassisState()
+            chassisSt.runstopMotionEnabled = self.getrunstop()
+            if (self._cmd_timeout > 0.0 and
+                    t - self._last_cmd_time > self._cmd_timeout):
+                # Too much time has elapsed since the last command. Stop the
+                # vehicle.
+                steer_ang_changed, turn_rad = \
+                    self._ctrl_steering(self._last_steer_ang, 0.0, 0.001)
+                self._ctrl_axles(0., 0., 0., 0., steer_ang_changed, turn_rad)
+                # rospy.logwarn("Command timeout. Stopping vehicle")
+            elif delta_t > 0.0:
+                with self.driveCommandLock:
+                    foundSteering = False
+                    foundThrottle = False
+                    # foundFrontBrake = False
+                    steer_ang = 0.0
+                    steer_ang_vel = 0.0
+                    foundSteering = False
+                    accel = 0.0
 
-      frontBrake = 0.0
-      speed = 0.0
-      chassisSt = chassisState()
-      chassisSt.runstopMotionEnabled = self.getrunstop();
-      if (self._cmd_timeout > 0.0 and
-        t - self._last_cmd_time > self._cmd_timeout):
-        # Too much time has elapsed since the last command. Stop the
-        # vehicle.
-        steer_ang_changed, center_y = \
-          self._ctrl_steering(self._last_steer_ang, 0.0, 0.001)
-        self._ctrl_axles(0.0, 0.0, 0.0, steer_ang_changed, center_y)
-      elif delta_t > 0.0:
-        with self.chassisCmdLock:
-          foundSteering = False
-          foundThrottle = False
-          foundFrontBrake = False
-          steer_ang = 0.0
-          steer_ang_vel = 0.0
-          foundSteering = False
-          accel = 0.0
+                    if not chassisSt.runstopMotionEnabled:
+                        chassisSt.rear_throttle = 0.0
+                        chassisSt.front_throttle = 0.0
+                        chassisSt.throttleCommander = 'runstop'
+                        foundThrottle = True
 
-          if not chassisSt.runstopMotionEnabled:
-            chassisSt.throttle = 0.0
-            chassisSt.throttleCommander = 'runstop'
-            foundThrottle = True
+                    for cmd, priority in self.commandPriorities:
+                        # rospy.logwarn("looking for chassis commander %s with priority %d", cmd, priority)
+                        if cmd in self.driveCommands:
+                            # rospy.loginfo("Found command from %s", cmd)
+                            if abs(self.driveCommands[cmd].steering) <= 1.0 and \
+                               (rospy.Time.now()-self.driveCommands[cmd].header.stamp) < \
+                               rospy.Duration.from_sec(0.2):
+                                # rospy.loginfo("%s in control of steering", cmd)
+                                steer_ang = -math.radians(self._max_steering_angle) * \
+                                    self.driveCommands[cmd].steering
+                                steer_ang_vel = 0.0
+                                chassisSt.steering = self.driveCommands[cmd].steering
+                                chassisSt.steeringCommander = self.driveCommands[cmd].sender
+                                foundSteering = True
 
-          for cmd,priority in self.commandPriorities:
-            #rospy.logwarn("looking for chassis commander %s with priority %d", cmd, priority)
-            if cmd in self.chassisCmds:
-              if abs(self.chassisCmds[cmd].steering) <= 1.0 and \
-                 (rospy.Time.now()-self.chassisCmds[cmd].header.stamp) < \
-                    rospy.Duration.from_sec(0.2) and\
-                 not foundSteering:
-                #rospy.loginfo("%s in control of steering", cmd);
-                steer_ang = -math.radians(self.max_steering_angle)*self.chassisCmds[cmd].steering
-                steer_ang_vel = 0.0
-                chassisSt.steering = self.chassisCmds[cmd].steering
-                chassisSt.steeringCommander = self.chassisCmds[cmd].sender
-                foundSteering = True
+                            if (abs(self.driveCommands[cmd].front_throttle) <= 1.0 or \
+                                abs(self.driveCommands[cmd].front_throttle) <= 1.0) and \
+                               (rospy.Time.now()-self.driveCommands[cmd].header.stamp) < \
+                               rospy.Duration.from_sec(0.2) and not foundThrottle:
+                                # front axle
+                                if self.driveCommands[cmd].front_throttle >= 0.0:
+                                    speed_front = self.front_axle_max_effort * \
+                                        self.driveCommands[cmd].front_throttle
+                                else:
+                                    speed_front = self.front_axle_brake_effort * \
+                                        self.driveCommands[cmd].front_throttle
+                                # rear axle
+                                if self.driveCommands[cmd].rear_throttle >= 0.0:
+                                    speed_rear = self.rear_axle_max_effort * \
+                                        self.driveCommands[cmd].rear_throttle
+                                else:
+                                    speed_rear = self.rear_axle_brake_effort * \
+                                        self.driveCommands[cmd].rear_throttle
 
-              if abs(self.chassisCmds[cmd].throttle) <= 1.0 and \
-                 (rospy.Time.now()-self.chassisCmds[cmd].header.stamp) < \
-                    rospy.Duration.from_sec(0.2) and\
-                 not foundThrottle:
+                                accel = 0.0
+                                chassisSt.rear_throttle = self.driveCommands[cmd].rear_throttle
+                                chassisSt.front_throttle = self.driveCommands[cmd].front_throttle
+                                chassisSt.throttleCommander = self.driveCommands[cmd].sender
+                                foundThrottle = True
 
-                #rospy.loginfo("%s in control of throttle", cmd);
-                if self.chassisCmds[cmd].throttle >= 0.0:
-                  speed = self.rear_axle_max_effort*self.chassisCmds[cmd].throttle
-                else:
-                  speed = self.rear_axle_brake_effort*self.chassisCmds[cmd].throttle
+                            # No brakes needed for now
+                            # if self.driveCommands[cmd].frontBrake >= 0.0 and \
+                            #    self.driveCommands[cmd].frontBrake <= 1.0 and \
+                            #    (rospy.Time.now()-self.driveCommands[cmd].header.stamp) < \
+                            #    rospy.Duration.from_sec(0.2) and not foundFrontBrake:
 
-                accel = 0.0
-                chassisSt.throttle = self.chassisCmds[cmd].throttle
-                chassisSt.throttleCommander = self.chassisCmds[cmd].sender
-                foundThrottle = True
+                            #     # the brake acts to slow any movement
+                            #     frontBrake = numpy.sign(
+                            #         self.wheelSpeedFront)*(-self.front_axle_brake_effort*self.driveCommands[cmd].frontBrake)
+                            #     rearBrake = frontBrake
+                            #     chassisSt.frontBrake = self.driveCommands[cmd].frontBrake
+                            #     chassisSt.frontBrakeCommander = self.driveCommands[cmd].sender
+                            #     foundFrontBrake = True
 
+                            # else:
+                            #     frontBrake = 0
+                            #     rearBrake = 0
 
-              if self.chassisCmds[cmd].frontBrake >= 0.0 and \
-                 self.chassisCmds[cmd].frontBrake <= 1.0 and \
-                 (rospy.Time.now()-self.chassisCmds[cmd].header.stamp) < \
-                    rospy.Duration.from_sec(0.2) and\
-                 not foundFrontBrake:
+                    steer_ang_changed, turn_rad = self._ctrl_steering(
+                        steer_ang, steer_ang_vel, delta_t)
+                    self._ctrl_axles(speed_front, speed_rear, accel, delta_t,
+                                     steer_ang_changed, turn_rad)
 
-                #the brake acts to slow any movement
-                frontBrake = numpy.sign(self.wheelSpeedFront)*(-self.front_axle_brake_effort*self.chassisCmds[cmd].frontBrake)
-                chassisSt.frontBrake = self.chassisCmds[cmd].frontBrake
-                chassisSt.frontBrakeCommander = self.chassisCmds[cmd].sender
-                foundFrontBrake = True
+                # Publish the steering and axle joint commands.
+                chassisSt.header.stamp = rospy.Time.now()
+                self.chassisStatePub.publish(chassisSt)
 
-              else:
-                frontBrake = 0
+                # rospy.loginfo("Torque front %6f, Torque rear %6f", speed_front, speed_rear)
 
-          steer_ang_changed, center_y = self._ctrl_steering(steer_ang, steer_ang_vel, delta_t)
-          self._ctrl_axles(speed, accel, delta_t, steer_ang_changed, center_y)
+                self._left_steer_cmd_pub.publish(self._theta_left)
+                self._right_steer_cmd_pub.publish(self._theta_right)
+                if self._left_front_axle_cmd_pub:
+                    self._left_front_axle_cmd_pub.publish(speed_front)
+                if self._right_front_axle_cmd_pub:
+                    self._right_front_axle_cmd_pub.publish(speed_front)
+                if self._left_rear_axle_cmd_pub:
+                    self._left_rear_axle_cmd_pub.publish(speed_rear)
+                if self._right_rear_axle_cmd_pub:
+                    self._right_rear_axle_cmd_pub.publish(speed_rear)
 
-        # Publish the steering and axle joint commands.
-        chassisSt.header.stamp = rospy.Time.now()
-        self.chassisStatePub.publish(chassisSt)
+                try:
+                    self._sleep_timer.sleep()
+                except rospy.exceptions.ROSTimeMovedBackwardsException:
+                    continue  # rospy.loginfo()
 
-        self._left_steer_cmd_pub.publish(self._theta_left)
-        self._right_steer_cmd_pub.publish(self._theta_right)
-        if self._left_front_axle_cmd_pub:
-          self._left_front_axle_cmd_pub.publish(frontBrake)
-        if self._right_front_axle_cmd_pub:
-          self._right_front_axle_cmd_pub.publish(frontBrake)
-        if self._left_rear_axle_cmd_pub:
-          self._left_rear_axle_cmd_pub.publish(speed)
-        if self._right_rear_axle_cmd_pub:
-          self._right_rear_axle_cmd_pub.publish(speed)
+    def driveCommandCb(self, driveCommand2):
+        """Chassis command callback
+
+          :Parameters:
+              driveCommand : eufs_msgs.msg.driveCommand
+                             Position to set the control actuators
+        """
+        with self.driveCommandLock:
+            self.driveCommands[driveCommand2.sender] = driveCommand2
+            self._last_cmd_time = rospy.get_time()
+
+    def runstopCb(self, runstop):
+        with self.runstopLock:
+            self.runstops[runstop.sender] = runstop
+
+    def getrunstop(self):
+        with self.runstopLock:
+            runstop = True
+            for item in self.runstops:
+                runstop &= self.runstops[item].motionEnabled
+            return runstop
+
+    def _get_front_wheel_params(self, side):
+        # Get front wheel parameters. Return a tuple containing the steering
+        # link name, steering controller name, axle controller name (or None),
+        # and inverse of the circumference.
+
+        prefix = "~" + side + "_front_wheel/"
+        steer_link_name = rospy.get_param(prefix + "steering_link_name",
+                                          side + "_steering_link")
+        steer_ctrlr_name = rospy.get_param(prefix + "steering_controller_name",
+                                           side + "_steering_controller")
+        axle_ctrlr_name, inv_circ = self._get_common_wheel_params(prefix)
+        return steer_link_name, steer_ctrlr_name, axle_ctrlr_name, inv_circ
+
+    def _get_rear_wheel_params(self, side):
+        # Get rear wheel parameters. Return a tuple containing the link name,
+        # axle controller name, and inverse of the circumference.
+
+        prefix = "~" + side + "_rear_wheel/"
+        link_name = rospy.get_param(prefix + "link_name", side + "_wheel")
+        axle_ctrlr_name, inv_circ = self._get_common_wheel_params(prefix)
+        return link_name, axle_ctrlr_name, inv_circ
+
+    def _get_common_wheel_params(self, prefix):
+        # Get parameters used by the front and rear wheels. Return a tuple
+        # containing the axle controller name (or None) and the inverse of the
+        # circumference.
+
+        axle_ctrlr_name = rospy.get_param(prefix + "axle_controller_name",
+                                          None)
 
         try:
-          self._sleep_timer.sleep()
-        except rospy.exceptions.ROSTimeMovedBackwardsException:
-          continue #rospy.loginfo()
+            dia = float(rospy.get_param(prefix + "diameter",
+                                        self._DEF_WHEEL_DIA))
+            if dia <= 0.0:
+                raise ValueError()
+        except:
+            rospy.logwarn("The specified wheel diameter is invalid. "
+                          "The default diameter will be used instead.")
+            dia = self._DEF_WHEEL_DIA
 
-  def chassisCmdCb(self, chassisCommand):
-    """Chassis command callback
+        return axle_ctrlr_name, 1 / (pi * dia)
 
-      :Parameters:
-          chassisCommand : autorally_msgs.msg.chassisCommand
-                         Position to set the control actuators
-    """
-    with self.chassisCmdLock:
-      #self.lastCmdTime = rospy.get_time()
-      self.chassisCmds[chassisCommand.sender] = chassisCommand
-      self._last_cmd_time = rospy.get_time()
+    def _get_link_pos(self, tfl, link):
+        # Return the position of the specified link, relative to the right
+        # rear wheel link.
 
-  def runstopCb(self, runstop):
-    with self.runstopLock:
-      self.runstops[runstop.sender] = runstop
+        while True:
+            try:
+                trans, not_used = \
+                    tfl.lookupTransform(self._right_rear_link_name, link,
+                                        rospy.Time(0))
+                return numpy.array(trans)
+            except:
+                pass
 
-  def getrunstop(self):
-    with self.runstopLock:
-      runstop = True
-      for item in self.runstops:
-        runstop &= self.runstops[item].motionEnabled
-      return runstop
+    def _ctrl_steering(self, steer_ang, steer_ang_vel_limit, delta_t):
+        # Control the steering joints.
 
-  def _get_front_wheel_params(self, side):
-    # Get front wheel parameters. Return a tuple containing the steering
-    # link name, steering controller name, axle controller name (or None),
-    # and inverse of the circumference.
+        # Compute theta, the virtual front wheel's desired steering angle.
+        if steer_ang_vel_limit > 0.0:
+            # Limit the steering velocity.
+            ang_vel = (steer_ang - self._last_steer_ang) / delta_t
+            ang_vel = max(-steer_ang_vel_limit,
+                          min(ang_vel, steer_ang_vel_limit))
+            theta = self._last_steer_ang + ang_vel * delta_t
+        else:
+            theta = steer_ang
 
-    prefix = "~" + side + "_front_wheel/"
-    steer_link_name = rospy.get_param(prefix + "steering_link_name",
-                                      side + "_steering_link")
-    steer_ctrlr_name = rospy.get_param(prefix + "steering_controller_name",
-                                       side + "_steering_controller")
-    axle_ctrlr_name, inv_circ = self._get_common_wheel_params(prefix)
-    return steer_link_name, steer_ctrlr_name, axle_ctrlr_name, inv_circ
+        # Compute the desired steering angles for the left and right front
+        # wheels.
+        turn_rad = self._wheelbase * math.tan((pi / 2) - theta)
+        steer_ang_changed = theta != self._last_steer_ang
+        if steer_ang_changed:
+            self._last_steer_ang = theta
+            self._theta_left = \
+                _get_steer_ang(math.atan(self._inv_wheelbase *
+                                         (turn_rad - self._effective_track)))
+            self._theta_right = \
+                _get_steer_ang(math.atan(self._inv_wheelbase *
+                                         (turn_rad + self._effective_track)))
+            # print("Desired steering angle", steer_ang)
+            # print("Steering left is", self._theta_left)
+            # print("Steering right is", self._theta_right)
 
-  def _get_rear_wheel_params(self, side):
-    # Get rear wheel parameters. Return a tuple containing the link name,
-    # axle controller name, and inverse of the circumference.
+        return steer_ang_changed, turn_rad
 
-    prefix = "~" + side + "_rear_wheel/"
-    link_name = rospy.get_param(prefix + "link_name", side + "_wheel")
-    axle_ctrlr_name, inv_circ = self._get_common_wheel_params(prefix)
-    return link_name, axle_ctrlr_name, inv_circ
+    def _ctrl_axles(self, speed_front, speed_rear, accel_limit, delta_t, steer_ang_changed,
+                    turn_rad):
+        # Control the axle joints.
 
-  def _get_common_wheel_params(self, prefix):
-    # Get parameters used by the front and rear wheels. Return a tuple
-    # containing the axle controller name (or None) and the inverse of the
-    # circumference.
+        # Compute veh_speed, the vehicle's desired speed.
+        if accel_limit > 0.0:
+            # Limit the vehicle's acceleration.
+            self._last_accel_limit = accel_limit
+            accel = ((speed_rear + speed_front)/2 - self._last_speed) / delta_t
+            accel = max(-accel_limit, min(accel, accel_limit))
+            veh_speed = self._last_speed + accel * delta_t
+        else:
+            self._last_accel_limit = accel_limit
+            veh_speed = (speed_rear + speed_front)/2
 
-    axle_ctrlr_name = rospy.get_param(prefix + "axle_controller_name",
-                                      None)
+        # Compute the desired angular velocities of the wheels.
+        if veh_speed != self._last_speed or steer_ang_changed:
+            self._last_speed = veh_speed
+            left_dist = turn_rad - self._joint_dist_div_2
+            right_dist = turn_rad + self._joint_dist_div_2
 
-    try:
-      dia = float(rospy.get_param(prefix + "diameter",
-                                    self._DEF_WHEEL_DIA))
-      if dia <= 0.0:
-          raise ValueError()
-    except:
-      rospy.logwarn("The specified wheel diameter is invalid. "
-                    "The default diameter will be used instead.")
-      dia = self._DEF_WHEEL_DIA
+            # Front
+            gain_front = (2 * pi) * speed_front / abs(turn_rad)
+            r = math.sqrt(left_dist ** 2 + self._wheelbase_sqr)
+            self._left_front_ang_vel = gain_front * r * self._left_front_inv_circ
+            r = math.sqrt(right_dist ** 2 + self._wheelbase_sqr)
+            self._right_front_ang_vel = gain_front * r * self._right_front_inv_circ
 
-    return axle_ctrlr_name, 1 / (pi * dia)
+            # Rear
+            gain_rear = (2 * pi) * speed_rear / turn_rad
+            self._left_rear_ang_vel = \
+                gain_rear * left_dist * self._left_rear_inv_circ
+            self._right_rear_ang_vel = \
+                gain_rear * right_dist * self._right_rear_inv_circ
 
-  def _get_link_pos(self, tfl, link):
-    # Return the position of the specified link, relative to the right
-    # rear wheel link.
+    def getWheelSpeed(self, data, name, dia):
+        try:
+            idx = data.name.index(name)
+            return data.velocity[idx]*(dia/2.0)
+        except IndexError:
+            rospy.logerror('modelStates does not contain ' + name)
+            return 0.0
 
-    while True:
-      try:
-        trans, not_used = \
-          tfl.lookupTransform(self._right_rear_link_name, link,
-                              rospy.Time(0))
-        return numpy.array(trans)
-      except:
-        pass
+    def getSteeringFeedback(self, data, name):
+        # print(data)
+        try:
+            idx = data.name.index(name)
+            return data.position[idx]
+        except IndexError:
+            rospy.logerror('modelStates does not contain ' + name)
+            return 0.0
 
-  def _ctrl_steering(self, steer_ang, steer_ang_vel_limit, delta_t):
-    # Control the steering joints.
+    def wheelSpeedsCb(self, data):
+        ws = wheelSpeeds()
+        ws.header.stamp = rospy.Time.now()
+        ws.header.frame_id = ''
 
-    # Compute theta, the virtual front wheel's desired steering angle.
-    if steer_ang_vel_limit > 0.0:
-      # Limit the steering velocity.
-      ang_vel = (steer_ang - self._last_steer_ang) / delta_t
-      ang_vel = max(-steer_ang_vel_limit,
-                     min(ang_vel, steer_ang_vel_limit))
-      theta = self._last_steer_ang + ang_vel * delta_t
-    else:
-      theta = steer_ang
+        # print data
+        ws.lfSpeed = self.getWheelSpeed(
+            data, self.left_front_name, self.left_front_dia)
+        ws.rfSpeed = self.getWheelSpeed(
+            data, self.right_front_name, self.right_front_dia)
+        self.wheelSpeedFront = (ws.lfSpeed+ws.rfSpeed)/2.0
+        
+        # steering feedback - average of both front wheel position
+        ws.steering = -((self.getSteeringFeedback(data, self.left_steer_name) +
+                        self.getSteeringFeedback(data, self.left_steer_name))/2)
 
-    # Compute the desired steering angles for the left and right front
-    # wheels.
-    center_y = self._wheelbase * math.tan((pi / 2) - theta)
-    steer_ang_changed = theta != self._last_steer_ang
-    if steer_ang_changed:
-      self._last_steer_ang = theta
-      self._theta_left = \
-          _get_steer_ang(math.atan(self._inv_wheelbase *
-                                     (center_y - 0.105)))
-      self._theta_right = \
-          _get_steer_ang(math.atan(self._inv_wheelbase *
-                                   (center_y + 0.105)))
-      print("Desired steering angle", steer_ang)
-      print("Steering left is", self._theta_left)
-      print("Steering right is", self._theta_right)
-
-    return steer_ang_changed, center_y
-
-  def _ctrl_axles(self, speed, accel_limit, delta_t, steer_ang_changed,
-                  center_y):
-    # Control the axle joints.
-
-    # Compute veh_speed, the vehicle's desired speed.
-    if accel_limit > 0.0:
-      # Limit the vehicle's acceleration.
-      self._last_accel_limit = accel_limit
-      accel = (speed - self._last_speed) / delta_t
-      accel = max(-accel_limit, min(accel, accel_limit))
-      veh_speed = self._last_speed + accel * delta_t
-    else:
-      self._last_accel_limit = accel_limit
-      veh_speed = speed
-
-    # Compute the desired angular velocities of the wheels.
-    if veh_speed != self._last_speed or steer_ang_changed:
-      self._last_speed = veh_speed
-      left_dist = center_y - self._joint_dist_div_2
-      right_dist = center_y + self._joint_dist_div_2
-
-      # Front
-      gain = (2 * pi) * veh_speed / abs(center_y)
-      r = math.sqrt(left_dist ** 2 + self._wheelbase_sqr)
-      self._left_front_ang_vel = gain * r * self._left_front_inv_circ
-      r = math.sqrt(right_dist ** 2 + self._wheelbase_sqr)
-      self._right_front_ang_vel = gain * r * self._right_front_inv_circ
-      # Rear
-      gain = (2 * pi) * veh_speed / center_y
-      self._left_rear_ang_vel = \
-        gain * left_dist * self._left_rear_inv_circ
-      self._right_rear_ang_vel = \
-        gain * right_dist * self._right_rear_inv_circ
-
-  def getWheelSpeed(self, data, name, dia):
-    try:
-      idx = data.name.index(name)
-      #return data.twist[idx].angular.y * (dia)/2.0 #if data is from linkState message
-      return data.velocity[idx]*(dia/2.0)
-    except IndexError:
-      rospy.logerror('modelStates does not contain ' + name)
-      return 0.0
+        # published speeds can't be negative so data mimics the physical platform
+        ws.lfSpeed = abs(ws.lfSpeed)
+        ws.rfSpeed = abs(ws.rfSpeed)
+        ws.lbSpeed = abs(self.getWheelSpeed(
+            data, self.left_rear_name, self.left_rear_dia))
+        ws.rbSpeed = abs(self.getWheelSpeed(
+            data, self.right_rear_name, self.right_rear_dia))
 
 
-  def wheelSpeedsCb(self, data):
-    ws = wheelSpeeds()
-    ws.header.stamp = rospy.Time.now()
-    ws.header.frame_id = 'gazeboSim'
+        if self.wheelSpeedsPub:
+            self.wheelSpeedsPub.publish(ws)
 
-    #print data
-    ws.lfSpeed = self.getWheelSpeed(data, self.left_front_name, self.left_front_dia)
-    ws.rfSpeed = self.getWheelSpeed(data, self.right_front_name, self.right_front_dia)
-    self.wheelSpeedFront = (ws.lfSpeed+ws.rfSpeed)/2.0
+    def getJointStateWheelParams(self, lr_prefix, fr_prefix):
+        dia = rospy.get_param(self._vehicle_prefix + '/ackermann_controller/' +
+                              lr_prefix + '_' + fr_prefix + '_wheel/diameter')
+        name = lr_prefix + '_' + fr_prefix + '_axle'
+        return name, dia
 
-    #published speeds can't be negative so data mimics the physical platform
-    ws.lfSpeed = abs(ws.lfSpeed)
-    ws.rfSpeed = abs(ws.rfSpeed)
-    ws.lbSpeed = abs(self.getWheelSpeed(data, self.left_rear_name, self.left_rear_dia))
-    ws.rbSpeed = abs(self.getWheelSpeed(data, self.right_rear_name, self.right_rear_dia))
+    def getLinkStateFrontWheelParams(self, lr_prefix):
+        dia = rospy.get_param(
+            self._vehicle_prefix + '/ackermann_controller/' + lr_prefix + '_front_wheel/diameter')
+        name = 'ackermann_platform::' + \
+            rospy.get_param(self._vehicle_prefix + '/ackermann_controller/' +
+                            lr_prefix + '_front_wheel/steering_link_name')
+        return name, dia
 
-    if self.wheelSpeedsPub:
-      self.wheelSpeedsPub.publish(ws)
+    def getLinkStateRearWheelParams(self, lr_prefix):
+        dia = rospy.get_param('/ackermann_platform/' + self._vehicle_prefix +
+                              'ackermann_controller/' + lr_prefix + '_rear_wheel/diameter')
+        name = 'ackermann_platform::' + \
+            rospy.get_param(self._vehicle_prefix + '/ackermann_controller/' +
+                            lr_prefix + '_rear_wheel/link_name')
+        return name, dia
 
-
-  def getJointStateWheelParams(self, lr_prefix, fr_prefix):
-    dia = rospy.get_param(self._vehicle_prefix + '/ackermann_controller/' + lr_prefix + '_' + fr_prefix + '_wheel/diameter')
-    name = lr_prefix + '_' + fr_prefix + '_axle'
-    return name, dia
-
-  def getLinkStateFrontWheelParams(self, lr_prefix):
-    dia = rospy.get_param(self._vehicle_prefix + '/ackermann_controller/' + lr_prefix + '_front_wheel/diameter')
-    name = 'ackermann_platform::' + rospy.get_param(self._vehicle_prefix + '/ackermann_controller/' + lr_prefix + '_front_wheel/steering_link_name')
-    return name, dia
-
-  def getLinkStateRearWheelParams(self, lr_prefix):
-    dia = rospy.get_param('/ackermann_platform/' + self._vehicle_prefix + 'ackermann_controller/' + lr_prefix + '_rear_wheel/diameter')
-    name = 'ackermann_platform::' + rospy.get_param(self._vehicle_prefix + '/ackermann_controller/' + lr_prefix + '_rear_wheel/link_name')
-    return name, dia
-
-  _DEF_WHEEL_DIA = 0.19    # Default wheel diameter. Unit: meter.
-  _DEF_EQ_POS = 0.0       # Default equilibrium position. Unit: meter.
-  _DEF_CMD_TIMEOUT = 0.5  # Default command timeout. Unit: second.
-  _DEF_PUB_FREQ = 50.0    # Default publishing frequency. Unit: hertz.
+    _DEF_WHEEL_DIA = 0.19    # Default wheel diameter. Unit: meter.
+    _DEF_EQ_POS = 0.0       # Default equilibrium position. Unit: meter.
+    _DEF_CMD_TIMEOUT = 0.5  # Default command timeout. Unit: second.
+    _DEF_PUB_FREQ = 50.0    # Default publishing frequency. Unit: hertz.
+    _DEF_MAX_STEERING_ANGLE = 27.2
+    _DEF_EFFECTIVE_TRACK = 0.0995465
 # end _AckermannController
 
 
 def _wait_for_ctrlr(list_ctrlrs, ctrlr_name):
-  # Wait for the specified controller to be in the "running" state.
-  # Commands can be lost if they are published before their controller is
-  # running, even if a latched publisher is used.
+    # Wait for the specified controller to be in the "running" state.
+    # Commands can be lost if they are published before their controller is
+    # running, even if a latched publisher is used.
 
-  while True:
-    response = list_ctrlrs()
-    for ctrlr in response.controller:
-      if ctrlr.name == ctrlr_name:
-        if ctrlr.state == "running":
-          return
-        rospy.sleep(0.1)
-        break
+    while True:
+        response = list_ctrlrs()
+        for ctrlr in response.controller:
+            if ctrlr.name == ctrlr_name:
+                if ctrlr.state == "running":
+                    return
+                rospy.sleep(0.1)
+                break
 
 
 def _create_axle_cmd_pub(list_ctrlrs, axle_ctrlr_name):
-  # Create an axle command publisher.
-  if not axle_ctrlr_name:
-    return None
-  return _create_cmd_pub(list_ctrlrs, axle_ctrlr_name)
+    # Create an axle command publisher.
+    if not axle_ctrlr_name:
+        return None
+    return _create_cmd_pub(list_ctrlrs, axle_ctrlr_name)
 
 
 def _create_cmd_pub(list_ctrlrs, ctrlr_name):
-  # Create a command publisher.
-  _wait_for_ctrlr(list_ctrlrs, ctrlr_name)
-  return rospy.Publisher(ctrlr_name + "/command", Float64, queue_size=1)
+    # Create a command publisher.
+    _wait_for_ctrlr(list_ctrlrs, ctrlr_name)
+    return rospy.Publisher(ctrlr_name + "/command", Float64, queue_size=1)
 
 
 def _get_steer_ang(phi):
-  # Return the desired steering angle for a front wheel.
-  if phi >= 0.0:
-    return (pi / 2) - phi
-  return (-pi / 2) - phi
+    # Return the desired steering angle for a front wheel.
+    if phi >= 0.0:
+        return (pi / 2) - phi
+    return (-pi / 2) - phi
 
 
 # main
 if __name__ == "__main__":
-  ctrlr = AckermannController()
-  ctrlr.spin()
+    ctrlr = AckermannController()
+    ctrlr.spin()

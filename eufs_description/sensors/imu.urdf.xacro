@@ -3,7 +3,6 @@
 	<xacro:macro name="sensor_imu" params="prefix parent *origin">
 		<joint name="${prefix}_base_joint" type="fixed">
 			<axis xyz="1 0 0"/>
-			<!--origin xyz="0 0 0.2825"/-->
 			<xacro:insert_block name="origin"/>
 			<parent link="${parent}"/>
 			<child link="${prefix}_base_link"/>

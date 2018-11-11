@@ -28,17 +28,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<robot name="eufs_platform" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<!-- 
+ADS-DV Specifications as given by IMechE:
+WHEELBASE         :1530mm
+FRONT TRACK       :1201mm
+REAR TRACK        :1201mm
+OVERALL WIDTH     :1430mm
+OVERALL LENGTH    :2814.6mm
+STATIC CASTER     :6 deg
+STATIC CAMBER     :2 deg
+TYRES             : SAE FORMULA STUDENT AVON 7.2/20.0-13
+DRIVEN WHEELS     :4WD
+DIFFERENTIALS     :OPEN DIFF -->
+
+<robot name="eufs" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <!-- Degree-to-radian conversions -->
   <xacro:property name="degrees_45" value="0.785398163"/>
   <xacro:property name="degrees_21" value="0.3665191429"/>
   <xacro:property name="degrees_90" value="1.57079633"/>
   <xacro:property name="degrees_180" value="3.14159265"/>
 
+
   <!-- chassis_length is measured along the x axis, chassis_width
        along the y axis, and chassis_height along the z axis. -->
   <xacro:property name="chassis_length" value="0.0"/>  <!-- used to poition car mesh -->
-  <xacro:property name="chassis_width" value="0.25"/>  <!-- not used -->
+  <xacro:property name="chassis_width" value="0.0"/>  <!-- not used -->
   <xacro:property name="chassis_height" value="0.25"/> <!-- not used -->
   <xacro:property name="chassis_mass" value="125"/>    <!-- used for physics dynamics -->
 
@@ -64,8 +78,8 @@ limitations under the License.
   wheel_travel: is the vertical wheel travel from suspension
   shock_z_offset: how much higher is the shock from the chassis
   -->
-  <xacro:property name="wheelbase" value="1.55"/>
-  <xacro:property name="hex_hub_dist" value="1.360"/>
+  <xacro:property name="wheelbase" value="1.53"/>
+  <xacro:property name="hex_hub_dist" value="1.201"/>
   <xacro:property name="axle_length" value="0.120"/>
   <xacro:property name="front_wheel_travel" value="0.05"/>
   <xacro:property name="front_shock_z_offset" value="-0.1"/>
@@ -136,7 +150,7 @@ limitations under the License.
   <xacro:macro name="front_shock"
                params="lr_prefix fr_prefix lr_reflect fr_reflect child">
     <joint name="${lr_prefix}_${fr_prefix}_shock" type="prismatic">
-      <parent link="chassis"/>
+      <parent link="base_link"/>
       <child link="${child}"/>
 
       <origin xyz="${fr_reflect * wheelbase / 2}
@@ -162,7 +176,7 @@ limitations under the License.
   <xacro:macro name="rear_shock"
                params="lr_prefix fr_prefix lr_reflect fr_reflect child">
     <joint name="${lr_prefix}_${fr_prefix}_shock" type="prismatic">
-      <parent link="chassis"/>
+      <parent link="base_link"/>
       <child link="${child}"/>
 
       <origin xyz="${fr_reflect * wheelbase / 2}
@@ -221,7 +235,7 @@ limitations under the License.
         </geometry>
       </visual>
 
-      <collision name="${lr_prefix}_${fr_prefix}_wheel_collision">
+      <collision name="collision">
         <origin xyz="0 0 0"/>
         <geometry>
           <cylinder radius="${tire_dia / 2}" length="${tire_width}"/>
@@ -310,15 +324,6 @@ limitations under the License.
   <!-- base_link must have geometry so that its axes can be displayed in rviz. -->
   <link name="base_link">
     <visual>
-      <geometry>
-        <box size="0.01 0.01 0.01"/>
-      </geometry>
-    </visual>
-  </link>
-
-  <!-- Chassis -->
-  <link name="chassis">
-    <visual>
       <origin xyz="${-chassis_length/2} 0 0"
               rpy="0 0 0"/>
       <geometry>
@@ -336,7 +341,7 @@ limitations under the License.
 
     <inertial>
       <mass value="${chassis_mass}"/>
-      <!-- <pose> 0.181796 0 0 0 0 0 </pose> -->
+      <origin xyz="0 0 0" />
       <inertia ixx="0.024290532"
                ixy="0" ixz="0"
                iyy="0.242298057"
@@ -344,16 +349,10 @@ limitations under the License.
                izz="0.242448658"/>
     </inertial>
   </link>
-  <gazebo reference="chassis">
+  <!-- <gazebo reference="base_link">
     <mu1>0.2</mu1>
     <mu2>0.2</mu2>
-  </gazebo>
-
-  <joint name="base_link_to_chasis" type="fixed">
-    <axis xyz="0 -1 -1" />
-    <parent link="base_link"/>
-    <child link="chassis"/>
-  </joint>
+  </gazebo> -->
 
  <link name="odom_ground_truth">
     <collision>
@@ -367,7 +366,6 @@ limitations under the License.
       <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
     </inertial>
   </link>
-
 
   <joint name="odom_ground_truth_joint" type="fixed">
     <axis xyz="0 0 0" />
@@ -404,6 +402,7 @@ limitations under the License.
       <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
     </plugin>
 
+    <!-- Ground truth plug in -->
     <plugin name="p3d_base_controller" filename="libgazebo_ros_p3d.so">
       <alwaysOn>true</alwaysOn>
       <updateRate>200.0</updateRate>
@@ -416,9 +415,9 @@ limitations under the License.
       <rpyOffset>0 0 0</rpyOffset>
     </plugin>
 
-    <plugin name="tire_friction" filename="libTireFrictionPlugin.so">
+    <plugin name="tire_friction_lr" filename="libTireFrictionPlugin.so">
       <link_name>left_rear_wheel</link_name>
-      <collision_name>left_rear_wheel_collision</collision_name>
+      <collision_name>collision</collision_name>
       <friction_static>1.1</friction_static>
       <friction_dynamic>0.7</friction_dynamic>
       <slip_static>0.10</slip_static>
@@ -426,9 +425,9 @@ limitations under the License.
       <speed_static>0.50</speed_static>
     </plugin>
 
-    <plugin name="tire_friction" filename="libTireFrictionPlugin.so">
+    <plugin name="tire_friction_rr" filename="libTireFrictionPlugin.so">
       <link_name>right_rear_wheel</link_name>
-      <collision_name>right_rear_wheel_collision</collision_name>
+      <collision_name>collision</collision_name>
       <friction_static>1.1</friction_static>
       <friction_dynamic>0.7</friction_dynamic>
       <slip_static>0.10</slip_static>
@@ -436,9 +435,9 @@ limitations under the License.
       <speed_static>0.50</speed_static>
     </plugin>
 
-    <plugin name="tire_friction" filename="libTireFrictionPlugin.so">
+    <plugin name="tire_friction_lf" filename="libTireFrictionPlugin.so">
       <link_name>left_front_wheel</link_name>
-      <collision_name>left_front_wheel_collision</collision_name>
+      <collision_name>collision</collision_name>
       <friction_static>1.1</friction_static>
       <friction_dynamic>0.7</friction_dynamic>
       <slip_static>0.10</slip_static>
@@ -446,9 +445,9 @@ limitations under the License.
       <speed_static>0.50</speed_static>
     </plugin>
 
-    <plugin name="tire_friction" filename="libTireFrictionPlugin.so">
+    <plugin name="tire_friction_rf" filename="libTireFrictionPlugin.so">
       <link_name>right_front_wheel</link_name>
-      <collision_name>right_front_wheel_collision</collision_name>
+      <collision_name>collision</collision_name>
       <friction_static>1.1</friction_static>
       <friction_dynamic>0.7</friction_dynamic>
       <slip_static>0.10</slip_static>
@@ -456,8 +455,27 @@ limitations under the License.
       <speed_static>0.50</speed_static>
     </plugin>
 
-
-    
 
   </gazebo>
+
+
+  <!-- Import all available sensors -->
+  <xacro:include filename="$(find eufs_description)/sensors/all_sensors.urdf.xacro" />
+
+  <xacro:sensor_imu parent="base_link" prefix="imu">
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  </xacro:sensor_imu>
+
+  <xacro:sensor_gps  parent="base_link" prefix="gps">
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  </xacro:sensor_gps>
+
+  <xacro:VLP-16R  parent="base_link" name="velodyne" topic="/velodyne_points" hz="10" samples="800">
+      <origin xyz="1.58 0.0 -0.1" rpy="0 ${1*M_PI/180.0} 0"/>
+  </xacro:VLP-16R>
+
+  <xacro:zed_camera parent="base_link" prefix="zed">
+      <origin xyz="0.1 0.0 0.52" rpy="0 0 0"/> 
+  </xacro:zed_camera> 
+
 </robot>

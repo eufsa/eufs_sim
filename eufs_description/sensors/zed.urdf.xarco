@@ -100,10 +100,10 @@ ZED camera at WVGA 100 fps
         </noise>
       </camera>
       <plugin name="stereo_camera_controller" filename="libgazebo_ros_multicamera.so">
-        <alwaysOn>true</alwaysOn>
+        <alwaysOn>false</alwaysOn>
         <updateRate>100.0</updateRate>
         <cameraName>${prefix}</cameraName>
-        <imageTopicName>image_raw</imageTopicName>
+        <imageTopicName>image_rect_color</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
         <frameName>/${prefix}_frame</frameName>
         <!--<rightFrameName>right_camera_optical_frame</rightFrameName>-->
