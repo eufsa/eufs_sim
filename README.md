@@ -2,7 +2,7 @@
 
 ROS/Gazebo simulation packages for driverless FSAE vehicles.
 
-![simulation](http://eufs.co/wp-content/uploads/2018/05/eufs-sim.jpg)
+![simulation](https://eufs.eusa.ed.ac.uk/wp-content/uploads/2018/05/eufsa-sim.jpg)
 
 ### Contents
 1. [Install Prerequisites](#requirements)
