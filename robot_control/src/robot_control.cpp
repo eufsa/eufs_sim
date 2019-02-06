@@ -37,7 +37,7 @@
 #include <sensor_msgs/JointState.h>
 #include <sensor_msgs/Imu.h>
 #include <std_msgs/Float64.h>
-#include <tf/transform_broadcaster.h>
+// #include <tf/transform_broadcaster.h>
 #include <nav_msgs/Odometry.h>
 #include <ackermann_msgs/AckermannDriveStamped.h>
 
@@ -147,13 +147,13 @@ public:
     double joints_state_time_window_;
 
     // Parameter that defines if odom tf is published or not
-    bool publish_odom_tf_;
+    // bool publish_odom_tf_;
 
     // Publisher for odom topic
     ros::Publisher odom_pub_;
 
     // Broadcaster for odom tf
-    tf::TransformBroadcaster odom_broadcaster;
+    // tf::TransformBroadcaster odom_broadcaster;
 
 
     SimController(ros::NodeHandle h) :  diagnostic_(),
@@ -205,11 +205,11 @@ public:
             throw ros::Exception("No wheel diameter specified. Quitting..");
         }
 
-        private_nh_.param<bool>("publish_odom_tf", publish_odom_tf_, true);
-        if (publish_odom_tf_)
-            ROS_INFO("PUBLISHING odom->base_footprint tf");
-        else
-            ROS_INFO("NOT PUBLISHING odom->base_footprint tf");
+        // private_nh_.param<bool>("publish_odom_tf", publish_odom_tf_, true);
+        // if (publish_odom_tf_)
+            // ROS_INFO("PUBLISHING odom->base_footprint tf");
+        // else
+            // ROS_INFO("NOT PUBLISHING odom->base_footprint tf");
 
         if (private_nh_.getParam("max_speed", max_speed_)) {
             ROS_INFO("Max speed is set to %f", max_speed_);
@@ -389,58 +389,58 @@ public:
         last_time = current_time;
     }
 
-    // Publish robot odometry tf and topic depending
-    void PublishOdometry() {
-        //first, we'll publish the transform over tf
-        // TODO change to tf_prefix
-        geometry_msgs::TransformStamped odom_trans;
-        odom_trans.header.stamp = current_time;
-        odom_trans.header.frame_id = "odom";
-        odom_trans.child_frame_id = "base_footprint";
+    // // Publish robot odometry tf and topic depending
+    // void PublishOdometry() {
+    //     //first, we'll publish the transform over tf
+    //     // TODO change to tf_prefix
+    //     geometry_msgs::TransformStamped odom_trans;
+    //     odom_trans.header.stamp = current_time;
+    //     odom_trans.header.frame_id = "odom";
+    //     odom_trans.child_frame_id = "base_footprint";
 
-        geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(_th_);
+    //     // geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(_th_);
 
-        odom_trans.transform.translation.x = _x_;
-        odom_trans.transform.translation.y = _y_;
-        odom_trans.transform.translation.z = 0.0;
-        odom_trans.transform.rotation = odom_quat;
+    //     odom_trans.transform.translation.x = _x_;
+    //     odom_trans.transform.translation.y = _y_;
+    //     odom_trans.transform.translation.z = 0.0;
+    //     odom_trans.transform.rotation = odom_quat;
 
-        // send the transform over /tf
-        // activate / deactivate with param
-        // this tf in needed when not using robot_pose_ekf
-        if (publish_odom_tf_) odom_broadcaster.sendTransform(odom_trans);
+    //     // send the transform over /tf
+    //     // activate / deactivate with param
+    //     // this tf in needed when not using robot_pose_ekf
+    //     if (publish_odom_tf_) odom_broadcaster.sendTransform(odom_trans);
 
-        //next, we'll publish the odometry message over ROS
-        nav_msgs::Odometry odom;
-        odom.header.stamp = current_time;
-        odom.header.frame_id = "odom";
+    //     //next, we'll publish the odometry message over ROS
+    //     nav_msgs::Odometry odom;
+    //     odom.header.stamp = current_time;
+    //     odom.header.frame_id = "odom";
 
-        //set the position
-        // Position
-        odom.pose.pose.position.x = _x_;
-        odom.pose.pose.position.y = _y_;
-        odom.pose.pose.position.z = 0.0;
-        // Orientation
-        odom.pose.pose.orientation = odom_quat;
-        // Pose covariance
-        for(int i = 0; i < 6; i++)
-            odom.pose.covariance[i*6+i] = 0.1;  // test 0.001
+    //     //set the position
+    //     // Position
+    //     odom.pose.pose.position.x = _x_;
+    //     odom.pose.pose.position.y = _y_;
+    //     odom.pose.pose.position.z = 0.0;
+    //     // Orientation
+    //     odom.pose.pose.orientation = odom_quat;
+    //     // Pose covariance
+    //     for(int i = 0; i < 6; i++)
+    //         odom.pose.covariance[i*6+i] = 0.1;  // test 0.001
 
-        //set the velocity
-        odom.child_frame_id = "base_footprint";
-        // Linear velocities
-        odom.twist.twist.linear.x = _vx_;
-        odom.twist.twist.linear.y = _vy_;
-        odom.twist.twist.linear.z = 0.0;
-        // Angular velocities
-        odom.twist.twist.angular.z = _vth_;
-        // Twist covariance
-        for(int i = 0; i < 6; i++)
-            odom.twist.covariance[6*i+i] = 0.1;  // test 0.001
+    //     //set the velocity
+    //     odom.child_frame_id = "base_footprint";
+    //     // Linear velocities
+    //     odom.twist.twist.linear.x = _vx_;
+    //     odom.twist.twist.linear.y = _vy_;
+    //     odom.twist.twist.linear.z = 0.0;
+    //     // Angular velocities
+    //     odom.twist.twist.angular.z = _vth_;
+    //     // Twist covariance
+    //     for(int i = 0; i < 6; i++)
+    //         odom.twist.covariance[6*i+i] = 0.1;  // test 0.001
 
-        //publish the message
-        odom_pub_.publish(odom);
-    }
+    //     //publish the message
+    //     odom_pub_.publish(odom);
+    // }
 
     /// Controller stopping
     void stopping()
@@ -518,8 +518,8 @@ public:
             {
                 while(ros::ok() && nh_.ok()) {
                     UpdateControl();
-                    UpdateOdometry();
-                    PublishOdometry();
+                    // UpdateOdometry();
+                    // PublishOdometry();
                     diagnostic_.update();
                     ros::spinOnce();
                     r.sleep();

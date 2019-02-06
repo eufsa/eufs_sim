@@ -40,13 +40,5 @@
   
   <!-- start robot_control node -->
   <include file="$(find robot_control)/launch/robot_control.launch"/>
-
-  <!-- Python script to republish ground truth -->
-  <node 
-    name="ground_truth_republisher"
-    pkg="eufs_gazebo"
-    type="ground_truth_republisher.py"
-    output="screen"
-  />
   
 </launch>
