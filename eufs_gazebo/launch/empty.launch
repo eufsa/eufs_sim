@@ -6,7 +6,7 @@
   <env name="GAZEBO_RESOURCE_PATH" value="$(find eufs_description)"/>
   <arg name="namespace" default="eufs"/>
   <arg name="debug" default="false"/>
-  <arg name="gui" default="true"/>
+  <arg name="gui" default="false"/>
   <arg name="cmd_timeout" default="0.5"/>
   
   <!-- Vehicle pose -->

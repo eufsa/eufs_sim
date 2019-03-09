@@ -38,7 +38,7 @@
         <material>
           <script>
             <uri>model://materials/gazebo.material</uri>
-            <name>Gazebo/Asphalt</name>
+            <name>Gazebo/White</name>
           </script>
         </material>
       </visual>

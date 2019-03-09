@@ -48,13 +48,5 @@
     output="screen"
     args="/ground_truth/state">
   </node>
-
-  <node 
-    name="message_to_tf" 
-    pkg="message_to_tf" 
-    type="message_to_tf" 
-    output="screen" 
-    args="/ground_truth/state"
-  />
   
 </launch>

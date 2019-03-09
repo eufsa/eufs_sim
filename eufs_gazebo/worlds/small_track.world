@@ -41,7 +41,7 @@
 
     <include>
       <uri>model://models/small_track</uri>
-      <pose>0 0 0.5 0 0 0</pose>
+      <pose>0 0 0.1 0 0 0</pose>
     </include>
 
   </world>
