@@ -3,7 +3,7 @@
 
   <!-- load the controllers -->
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-    output="screen" ns="/eufs" args="--shutdown-time 1 --namespace=/eufs
+    ns="/eufs" args="--shutdown-time 1 --namespace=/eufs
 					  left_front_shock_controller
 					  left_steering_joint_controller
 					  left_front_axle_controller
@@ -23,7 +23,7 @@
   <!-- once the joint_state is published, run the robot_state_publisher, the namespace has to be adapted --> 
   <!-- convert joint states to TF transforms for rviz, etc -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
-    respawn="false" output="screen">
+    respawn="false">
     <remap from="/joint_states" to="/eufs/joint_states" />
   </node>
   
