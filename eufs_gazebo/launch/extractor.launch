@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<launch>
+	<arg name="track_name" default="small_track.csv" />
+	<arg name="view_distance" default="20" /> 
+
+	<node name="cone_ground_truth" pkg="eufs_gazebo" type="extractor.py">
+		<param name="view_distance" value="$(arg view_distance)"/>
+		<param name="track_path" value="$(find eufs_gazebo)/tracks/$(arg track_name)"/>
+		<param name="cone_topic" value="/cones_ground_truth"/>
+		<param name="pose_topic" value="/ground_truth/state_raw"/>
+		<param name="marker_topic" value="map_extract_path/cone_markers"/>
+	</node> 
+</launch>
